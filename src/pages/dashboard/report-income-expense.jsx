@@ -1,0 +1,115 @@
+import Layout from '@/components/Layout'
+import React, { useEffect } from 'react'
+import { StatCard } from '.'
+import { FaArrowUp, FaChartArea } from 'react-icons/fa'
+import Helper from '@/classes/Helper.class'
+import IncomeExpenseTable from '@/components/IncomeExpenseTable'
+import { Button, Divider, Input } from '@nextui-org/react'
+import ReadCardDialog from '@/components/ReadCardDialog'
+import { showToast } from '@/store/actions/toastAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { client } from '@/classes'
+import { useRouter } from 'next/router'
+import { createIncomeExpenses, getIncomeExpenseList } from '@/store/actions/incomeExpensesAction'
+import { showConfirm } from '@/store/actions/confirmAction'
+
+export default function ReportIncomeExpense() {
+    const initFormData = {
+        income: "",
+        expense: "",
+        withdraw_value: "",
+        citizen_id: "",
+        description: ""
+    }
+    const [formData, setFormData] = React.useState(initFormData)
+    const dispatch = useDispatch();
+    const [readCardManagerIsOpen, setReadCardManagerIsOpen] = React.useState(false)
+    const incomeExpensesList = useSelector(state => state.incomeExpenses.incomeExpensesList)
+    const router = useRouter()
+    async function checkManagerAndSave(citizen_id) {
+        try {
+            const check = await client.checkManager(citizen_id)
+            if (check) {
+                dispatch(createIncomeExpenses({ ...formData, citizen_id }, () => {
+                    init();
+                    resetForm();
+                }))
+            }
+        } catch (error) {
+            dispatch(showToast(error, "bg-red-500", 3000))
+        }
+    }
+    function handleConfirmSaveData() {
+        const required = ["income", "expense", "withdraw_value", "description"]
+        const check = required.every(i => formData[i] !== "")
+        if (!check) {
+            dispatch(showToast("กรุณากรอกข้อมูลให้ครบถ้วน", "bg-red-500", 3000))
+            return;
+        }
+        dispatch(showConfirm("ยืนยันการบันทึก, ในขั้นตอนต่อไปคุณจะต้องเสียบบัตรประจำตัวของผู้จัดการ", () => {
+            setReadCardManagerIsOpen(true)
+        }))
+    }
+    function resetForm() {
+        setFormData(initFormData)
+    }
+    const user = useSelector(state => state.user.user)
+    function init() {
+        dispatch(getIncomeExpenseList(user.village.id))
+    }
+    useEffect(() => {
+        if (router.isReady) {
+            init();
+        }
+    }, [router.isReady])
+    return (
+        <div>
+            <div className="p-8 bg-gray-100">
+                <div className="grid grid-cols-3 gap-4">
+                    <StatCard value={Helper.formatNumber(0)} title={"ยอดรวมรายรับ"} color={'bg-green-500'}></StatCard>
+                    <StatCard value={Helper.formatNumber(0)} title={"ยอดรวมรายจ่าย"} color={'bg-red-500'} icon={<FaArrowUp />}></StatCard>
+                    <StatCard value={Helper.formatNumber(0)} title={"สรุป"} color={'bg-sky-500'} icon={<FaChartArea />}></StatCard>
+                </div>
+            </div>
+            <Divider />
+            <div className=' py-4'>
+                <div className="px-8 py-2">
+                    <h2 className="text-xl font-semibold">บันทึกรายรับ-รายจ่าย</h2>
+                </div>
+                <div className="px-8 py-2 grid grid-cols-4 gap-4">
+                    <div className="w-full">
+                        <Input placeholder='กรอกข้อมูล' label="รายรับ" variant='bordered' value={formData.income} onChange={e => setFormData({ ...formData, income: e.target.value })}></Input>
+                    </div>
+                    <div className="w-full">
+                        <Input placeholder='กรอกข้อมูล' label="รายจ่าย" variant='bordered' value={formData.expense} onChange={e => setFormData({ ...formData, expense: e.target.value })}></Input>
+                    </div>
+                    <div className="w-full flex items-center">
+                        <Input value={Helper.formatNumber(Number(formData.income) - Number(formData.expense))} disabled label="คงเหลือ" variant='bordered'></Input>
+                    </div>
+                    <div className="w-full">
+                        <Input placeholder='กรอกข้อมูล' label="ถอน 70%" variant='bordered' value={formData.withdraw_value} onChange={e => setFormData({ ...formData, withdraw_value: e.target.value })}></Input>
+                    </div>
+                    <div className="col-span-3">
+                        <Input placeholder='กรอกข้อมูล' label="รายละเอียด" variant='bordered' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })}></Input>
+                    </div>
+                    <div className="flex items-center">
+                        <Button color="success" size='lg' className='text-white w-full' onClick={() => handleConfirmSaveData()}
+                        >บันทึกรายการ</Button>
+                    </div>
+                </div>
+            </div>
+            <div className="px-8 mt-4">
+                <IncomeExpenseTable data={incomeExpensesList} onReload={init}></IncomeExpenseTable>
+            </div>
+            <ReadCardDialog isOpen={readCardManagerIsOpen} onClose={() => setReadCardManagerIsOpen(false)} callback={(data) => checkManagerAndSave(data.citizen_id)} />
+        </div>
+    )
+}
+
+ReportIncomeExpense.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
+}
