@@ -115,6 +115,12 @@ class Client {
 	async checkLoanQuota(citizen_id) {
 		return await this.call("GET", `/api/promise-document/loanQuota/${citizen_id}`);
 	}
+	async getAnalysis(village_code) {
+		return await this.call("GET", "/api/analysis/dashboard?village_code=" + village_code);
+	}
+	async getVillage(id) {
+		return await this.call("GET", "/api/village/" + id);
+	}
 }
 
 export default Client;

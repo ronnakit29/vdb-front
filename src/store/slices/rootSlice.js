@@ -5,7 +5,7 @@ import toastSlice from "./toastSlice";
 import userSlice from "./userSlice";
 import utilSlice from "./utilSlice";
 import villageSlice from "./villageSlice";
-
+import analysisSlice from "./analysisSlice";
 const { combineReducers } = require("@reduxjs/toolkit");
 
 const appReducer = combineReducers({
@@ -15,7 +15,8 @@ const appReducer = combineReducers({
 	user: userSlice,
 	promiseDocument: promiseDocumentSlice,
 	incomeExpenses: incomeExpensesSlice,
-	village: villageSlice
+	village: villageSlice,
+	analysis: analysisSlice,
 });
 
 const rootReducer = (state, action) => {

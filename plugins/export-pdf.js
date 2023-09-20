@@ -6,7 +6,7 @@ import THBText from 'thai-baht-text';
 const fontkit = require('fontkit');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 const readTemplatePDF = async (data = [], file_name) => {
-	const templatePDFBuffer = await axios.get('/pdf-template/template.pdf', { responseType: 'arraybuffer' });
+	const templatePDFBuffer = await axios.get('/pdf-template/template2.pdf', { responseType: 'arraybuffer' });
 	const bufferData = templatePDFBuffer.data;
 	const pdfDoc = await PDFDocument.load(bufferData);
 	pdfDoc.registerFontkit(fontkit);

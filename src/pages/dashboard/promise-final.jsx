@@ -2,7 +2,7 @@ import Helper from '@/classes/Helper.class'
 import Layout from '@/components/Layout'
 import { acceptPromiseDocument, cancelPromiseDocument, checkQuota, endPromiseDocument, getPromiseDocumentByGroupId, updatePromiseDocument } from '@/store/actions/promiseDocumentAction'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SectionForm, UserSlotComponent } from './promise-form'
 import { Button, Divider } from '@nextui-org/react'
@@ -12,6 +12,7 @@ import { FaCheck, FaCheckDouble, FaFilePdf, FaTimes } from 'react-icons/fa'
 import { showConfirm } from '@/store/actions/confirmAction'
 import { showToast } from '@/store/actions/toastAction'
 import readTemplatePDF from '../../../plugins/export-pdf'
+import ReadCardDialog from '@/components/ReadCardDialog'
 
 export default function PromiseFinal() {
     const router = useRouter()
@@ -38,10 +39,16 @@ export default function PromiseFinal() {
         guarantorSecond: "ผู้ค้ำประกันคนที่ 2",
         approver: "ผู้อนุมัติ",
     }
-    function handleInsertCard(receive) {
-        dispatch(setDialog({ insertCard: true }))
-        dispatch(setTitle({ insertCard: 'รับข้อมูลบัตรของ' + receiveTxt[receive] }))
-        dispatch(setInsertSlotType(receive))
+    const [instDataTo, setInstDataTo] = useState('guarantorFirst')
+    const [isInsertCardOpen, setIsInsertCardOpen] = useState(false)
+    function handleInsertCard(insertDataTo) {
+        setIsInsertCardOpen(true)
+        setInstDataTo(insertDataTo)
+    }
+    function setInsertDataSlot(data) {
+        dispatch(setInsertSlot({
+            [instDataTo]: data
+        }))
     }
 
     function handleUpdateCitizenData() {
@@ -89,6 +96,18 @@ export default function PromiseFinal() {
             }
         }
     }, [insertSlot])
+
+    useEffect(() => {
+        if (insertSlot.guarantorFirst) {
+            memberCheckQuota(insertSlot.guarantorFirst?.citizen_id, 'guarantorFirst')
+        }
+    }, [insertSlot.guarantorFirst])
+    useEffect(() => {
+        if (insertSlot.guarantorSecond) {
+            memberCheckQuota(insertSlot.guarantorSecond?.citizen_id, 'guarantorSecond')
+        }
+    }, [insertSlot.guarantorSecond])
+
     function handleAcceptPromise() {
         dispatch(showConfirm('ยืนยันการอนุมัติสัญญานี้', () => {
             dispatch(acceptPromiseDocument(groupId))
@@ -197,11 +216,12 @@ export default function PromiseFinal() {
                     {memberDocs[0]?.status === 0 && <Button color='success' size='lg' onClick={handleUpdateCitizenData} className='items-center gap-2 w-full text-white'><FaCheck /> บันทึกข้อมูลของสัญญานี้</Button>}
                     {memberDocs[0]?.status === 0 && <Button color='success' size='lg' onClick={handleAcceptPromise} className='items-center gap-2 w-full text-white'><FaCheck /> อนุมัติสัญญานี้</Button>}
                     {memberDocs[0]?.status === 1 && <Button color='success' variant='flat' size='lg' onClick={handleEndPromise} className='items-center gap-2 w-full'><FaCheckDouble /> สิ้นสุดสัญญา</Button>}
-                    {memberDocs[0]?.status === 1 && <Button color='danger' variant='ghost' size='lg' onClick={handleCancelPromise} className='items-center gap-2 w-full'><FaTimes /> ยกเลิกสัญญาฉบับนี้</Button>}
+                    {memberDocs[0]?.status === 1 || memberDocs[0]?.status === 0 && <Button color='danger' variant='ghost' size='lg' onClick={handleCancelPromise} className='items-center gap-2 w-full'><FaTimes /> ยกเลิกสัญญาฉบับนี้</Button>}
                     {memberDocs[0]?.status === 1 && <Button color='danger' variant='ghost' size='lg' onClick={handleOpenPdfDialog} className='items-center gap-2 w-full'><FaFilePdf /> ดาวน์โหลดเอกสารสัญญา</Button>}
 
                 </div>
             </div>}
+            <ReadCardDialog isOpen={isInsertCardOpen} callback={(data) => setInsertDataSlot(data)} onClose={() => setIsInsertCardOpen(false)} />
         </div>
     )
 }

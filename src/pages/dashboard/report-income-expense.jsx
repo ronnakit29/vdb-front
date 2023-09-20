@@ -62,13 +62,15 @@ export default function ReportIncomeExpense() {
             init();
         }
     }, [router.isReady])
+    const sumIncome = incomeExpensesList.reduce((a, b) => a + Number(b.income), 0)
+    const sumExpense = incomeExpensesList.reduce((a, b) => a + Number(b.expense), 0)
     return (
         <div>
             <div className="p-8 bg-gray-100">
                 <div className="grid grid-cols-3 gap-4">
-                    <StatCard value={Helper.formatNumber(0)} title={"ยอดรวมรายรับ"} color={'bg-green-500'}></StatCard>
-                    <StatCard value={Helper.formatNumber(0)} title={"ยอดรวมรายจ่าย"} color={'bg-red-500'} icon={<FaArrowUp />}></StatCard>
-                    <StatCard value={Helper.formatNumber(0)} title={"สรุป"} color={'bg-sky-500'} icon={<FaChartArea />}></StatCard>
+                    <StatCard value={Helper.formatNumber(sumIncome)} title={"ยอดรวมรายรับ"} color={'bg-green-500'}></StatCard>
+                    <StatCard value={Helper.formatNumber(sumExpense)} title={"ยอดรวมรายจ่าย"} color={'bg-red-500'} icon={<FaArrowUp />}></StatCard>
+                    <StatCard value={Helper.formatNumber(sumIncome - sumExpense)} title={"สรุป"} color={'bg-sky-500'} icon={<FaChartArea />}></StatCard>
                 </div>
             </div>
             <Divider />

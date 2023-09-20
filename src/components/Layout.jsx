@@ -11,6 +11,7 @@ import ToastComponent from './ToastComponent';
 import ConfirmDialog from './ConfirmDialog';
 import PDFDialogDialog from './PDFDialog';
 import UserDialog from './UserDialog';
+import VillageDialog from './VillageDialog';
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -43,6 +44,7 @@ export default function Layout({ children }) {
       <ConfirmDialog />
       <PDFDialogDialog />
       <UserDialog />
+      <VillageDialog />
     </div>
   )
 }

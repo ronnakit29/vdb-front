@@ -2,16 +2,18 @@ import Helper from '@/classes/Helper.class'
 import Layout from '@/components/Layout'
 import { setInsertSlot, setInsertSlotType } from '@/store/slices/memberSlice'
 import { setDialog, setTitle } from '@/store/slices/utilSlice'
-import { Button, Card, CardBody, CardHeader, Divider } from '@nextui-org/react'
+import { Button, Card, CardBody, CardHeader, Divider, Select, SelectItem } from '@nextui-org/react'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaArrowDown, FaDownload, FaFile, FaFileInvoice, FaList, FaUsers } from 'react-icons/fa'
 import { GiChart } from 'react-icons/gi'
 import { GoHash } from 'react-icons/go'
 import ReadCardDialog from '@/components/ReadCardDialog'
 import { client } from '@/classes'
 import { showToast } from '@/store/actions/toastAction'
+import { getAnalysis } from '@/store/actions/analysisAction'
+import { getVillageList } from '@/store/actions/villageAction'
 export function StatCard({ title, value, icon, color }) {
     return (<div className="flex items-center justify-between bg-white shadow-md rounded-3xl p-5">
         <div className="flex items-center">
@@ -49,6 +51,14 @@ export default function Index() {
             dispatch(showToast(error, "bg-red-500", 3000))
         }
     }
+    const user = useSelector(state => state.user.user)
+    const [villageCodeSelect, setVillageCodeSelect] = React.useState(user.village_code)
+    const villageList = useSelector(state => state.village.villageList)
+    const analysis = useSelector(state => state.analysis.analysis)
+    function init() {
+        dispatch(getAnalysis(villageCodeSelect || user.village_code))
+        dispatch(getVillageList())
+    }
     function handleOpenInsertCardDialog() {
         setIsInsertCardDialogOpen(true)
         dispatch(setInsertSlot({
@@ -60,6 +70,11 @@ export default function Index() {
         }))
     }
     useEffect(() => {
+        if (router.isReady) {
+            init()
+        }
+    }, [router.isReady, villageCodeSelect])
+    useEffect(() => {
         if (router.query.type) {
             handleOpenInsertCardDialog(router.query.type)
         }
@@ -68,15 +83,25 @@ export default function Index() {
         <ReadCardDialog isOpen={isInsertCardDialogOpen} onClose={() => setIsInsertCardDialogOpen(false)} callback={(data) => checkDataAndNextStep(data)} />
         <div className=" py-8 bg-gray-100">
             <div className="grid  gap-4 container mx-auto px-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-                <StatCard title={"ยอดปล่อยกู้ทั้งหมด"} value={Helper.formatNumber(10000, 2)} icon={<FaArrowDown />}></StatCard>
+                <StatCard title={"ยอดปล่อยกู้ทั้งหมด"} value={Helper.formatNumber(analysis?.totalPromiseAmount || 0, 2)} icon={<FaArrowDown />}></StatCard>
                 {/* 1 percent  */}
-                <StatCard title={"ยอดเงินจากการหัก 1%"} value={Helper.formatNumber(10000)} icon={<FaArrowDown />} color="bg-green-500"></StatCard>
+                <StatCard title={"ยอดเงินจากการหัก 1%"} value={Helper.formatNumber(analysis?.totalHedgeFundAmount || 0)} icon={<FaArrowDown />} color="bg-green-500"></StatCard>
                 {/* total user count */}
-                <StatCard title={"จำนวนสมาชิกทั้งหมด"} value={Helper.formatNumber(10000)} icon={<FaUsers />} color="bg-yellow-500"></StatCard>
+                <StatCard title={"จำนวนสมาชิกทั้งหมด"} value={Helper.formatNumber(analysis?.totalMember || 0, 0)} icon={<FaUsers />} color="bg-yellow-500"></StatCard>
                 {/* total promise */}
-                <StatCard title={"จำนวนสัญญาทั้งหมด"} value={Helper.formatNumber(10000)} icon={<FaFileInvoice />} color="bg-red-500"></StatCard>
+                <StatCard title={"จำนวนสัญญาทั้งหมด"} value={Helper.formatNumber(analysis?.totalPromise || 0, 0)} icon={<FaFileInvoice />} color="bg-red-500"></StatCard>
             </div>
         </div>
+        <Divider />
+        <div className="px-8 py-2">
+            <select value={villageCodeSelect} label="เลือกหมู่บ้าน" className='w-full bg-gray-50 transition-all hover:bg-gray-100 px-4 py-2 rounded-xl outline-none' onChange={(e) => setVillageCodeSelect(e.target.value)}>
+                <option value="">- เลือกหมู่บ้าน -</option>
+                {villageList.map((i, key) => <option key={key} value={i.code}>
+                    {i.code} | {i.name}
+                </option>)}
+            </select>
+        </div>
+        <Divider />
         <div className="container mx-auto">
             <div className='p-8 flex flex-col items-center'>
                 <div className="w-full">
@@ -105,18 +130,18 @@ export default function Index() {
 
                         </div>
                     </div>
-                    <h1 className='text-2xl font-semibold mb-4'>บัญชีกองทุนประกันความเสี่ยง</h1>
+                    <h1 className='text-2xl font-semibold mb-4'>รายงานการกู้เงิน/ยอดเงินเข้ากองทุนประกันความเสี่ยง</h1>
                     <div className='flex gap-4 mb-5'>
                         <Card shadow='sm' className='w-full'>
                             <CardHeader>
                                 <div className='flex flex-col'>
-                                    <p className='text-md'>ยอดเงินในบัญชีกองทุน</p>
+                                    <p className='text-md'>ยอดเงินกู้ทั้งหมด</p>
                                 </div>
                             </CardHeader>
                             <Divider />
                             <CardBody className='flex-row flex justify-between gap-4 items-center'>
-                                <p className="text-xl text-primary-500 font-semibold">{Helper.formatNumber(100000)} บาท</p>
-                                <Button color='primary'>ดูรายการ</Button>
+                                <p className="text-xl text-primary-500 font-semibold">{Helper.formatNumber(analysis.totalPromiseAmount)} บาท</p>
+                                <Button color='primary' onClick={() => router.push('/dashboard/promise-list?type=short')}>ดูรายการ</Button>
                             </CardBody>
                         </Card>
                         <Card shadow='sm' className='w-full'>
@@ -127,7 +152,7 @@ export default function Index() {
                             </CardHeader>
                             <Divider />
                             <CardBody className='flex-row flex justify-between gap-4 items-center'>
-                                <p className="text-xl text-primary-500 font-semibold">{Helper.formatNumber(100000)} บาท</p>
+                                <p className="text-xl text-primary-500 font-semibold">{Helper.formatNumber(analysis.totalHedgeFundAmount)} บาท</p>
                                 <Button color='primary' onClick={() => router.push('/dashboard/promise-list')}>ดูรายการ</Button>
                             </CardBody>
                         </Card>

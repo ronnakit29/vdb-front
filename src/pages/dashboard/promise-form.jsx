@@ -184,6 +184,7 @@ export default function PromiseForm() {
     }
     const typeQuery = router.query.type
     const [instDataTo, setInstDataTo] = useState('guarantorFirst')
+    const [isInsertCardOpen, setIsInsertCardOpen] = useState(false)
     function handleInsertCard(insertDataTo) {
         setIsInsertCardOpen(true)
         setInstDataTo(insertDataTo)
@@ -267,7 +268,6 @@ export default function PromiseForm() {
             }, ({ data }) => router.push(`/dashboard/promise-final?groupId=${data[0].group_id}`)))
         }))
     }
-    const [isInsertCardOpen, setIsInsertCardOpen] = useState(false)
     return (
         insertSlot?.member ? <div className='p-8'>
             <div className='mb-5'>
