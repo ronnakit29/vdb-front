@@ -6,3 +6,4 @@ services:
       - "3000:3000"
     environment:
       - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+    restart: always
