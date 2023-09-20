@@ -13,6 +13,7 @@ import { showConfirm } from '@/store/actions/confirmAction'
 import { showToast } from '@/store/actions/toastAction'
 import readTemplatePDF from '../../../plugins/export-pdf'
 import ReadCardDialog from '@/components/ReadCardDialog'
+import { client } from '@/classes'
 
 export default function PromiseFinal() {
     const router = useRouter()
@@ -118,6 +119,16 @@ export default function PromiseFinal() {
             dispatch(endPromiseDocument(groupId))
         }))
     }
+    async function managerConfirmCitizenId(citizen_id) {
+        try {
+            const check = await client.checkManager(citizen_id)
+            if (check) {
+                handleEndPromise();
+            }
+        } catch (error) {
+            dispatch(showToast(error, "bg-red-500", 3000))
+        }
+    }
     function handleCancelPromise() {
         dispatch(showConfirm('ยืนยันการยกเลิกสัญญานี้', () => {
             dispatch(cancelPromiseDocument(groupId))
@@ -126,6 +137,7 @@ export default function PromiseFinal() {
     function handleOpenPdfDialog() {
         readTemplatePDF(memberDocs, "เอกสารสัญญาของ " + memberDocs[0].loaner.first_name + " " + memberDocs[0].loaner.last_name + " เลขที่ " + memberDocs[0].id + "/" + memberDocs[0].promise_year)
     }
+    const [isInsertCardConfirmEndOpen, setIsInsertCardConfirmEndOpen] = useState(false)
     return (
         <div>
             <div className="p-8 bg-gray-100">
@@ -222,6 +234,7 @@ export default function PromiseFinal() {
                 </div>
             </div>}
             <ReadCardDialog isOpen={isInsertCardOpen} callback={(data) => setInsertDataSlot(data)} onClose={() => setIsInsertCardOpen(false)} />
+            <ReadCardDialog isOpen={isInsertCardConfirmEndOpen} callback={(data) => managerConfirmCitizenId(data.citizen_id)} onClose={() => setIsInsertCardConfirmEndOpen(false)} />
         </div>
     )
 }

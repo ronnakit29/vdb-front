@@ -38,7 +38,7 @@ export default function ReadCardDialog({ isOpen, onClose, callback }) {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 100, opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.4, type: "spring" }}
                 className='fixed top-0 left-0 w-screen h-screen flex justify-center items-end pb-3 z-[999]'>
                 <Card className='border-2 border-success-500'>
                     <CardBody className='flex items-center gap-2'>

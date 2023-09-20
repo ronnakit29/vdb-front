@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <nav className='px-8 py-4 bg-green-600 text-white shadow-lg sticky top-0 w-full z-50'>
         <h1 className="text-xl font-semibold">ระบบเงินกู้เครือข่ายธนาคารหมู่บ้าน</h1>
-        <p>เพื่อสวัสดิการชุมชน อ.เวียงชัย ({user.village.name})</p>
+        <p>เพื่อสวัสดิการชุมชน อ.เวียงชัย ({user?.village?.name})</p>
     </nav>
   )
 }
