@@ -139,8 +139,8 @@ export default function Index() {
                                 </div>
                             </CardHeader>
                             <Divider />
-                            <CardBody className='flex-row flex justify-between gap-4 items-center'>
-                                <p className="text-xl text-primary-500 font-semibold">{Helper.formatNumber(analysis.totalPromiseAmount)} บาท</p>
+                            <CardBody className='flex-col flex justify-center gap-4 items-center'>
+                                <p className="text-3xl text-green-500 font-semibold">{Helper.formatNumber(analysis.totalPromiseAmount)} บาท</p>
                                 <Button color='primary' onClick={() => router.push('/dashboard/promise-list?type=short')}>ดูรายการ</Button>
                             </CardBody>
                         </Card>
@@ -151,8 +151,8 @@ export default function Index() {
                                 </div>
                             </CardHeader>
                             <Divider />
-                            <CardBody className='flex-row flex justify-between gap-4 items-center'>
-                                <p className="text-xl text-primary-500 font-semibold">{Helper.formatNumber(analysis.totalHedgeFundAmount)} บาท</p>
+                            <CardBody className='flex-col flex justify-center gap-4 items-center'>
+                                <p className="text-3xl text-orange-500 font-semibold">{Helper.formatNumber(analysis.totalHedgeFundAmount)} บาท</p>
                                 <Button color='primary' onClick={() => router.push('/dashboard/promise-list')}>ดูรายการ</Button>
                             </CardBody>
                         </Card>

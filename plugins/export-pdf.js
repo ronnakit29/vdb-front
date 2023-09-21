@@ -6,7 +6,7 @@ import THBText from 'thai-baht-text';
 const fontkit = require('fontkit');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 const readTemplatePDF = async (data = [], file_name) => {
-	const templatePDFBuffer = await axios.get('/pdf-template/template2.pdf', { responseType: 'arraybuffer' });
+	const templatePDFBuffer = await axios.get('/pdf-template/template3.pdf', { responseType: 'arraybuffer' });
 	const bufferData = templatePDFBuffer.data;
 	const pdfDoc = await PDFDocument.load(bufferData);
 	pdfDoc.registerFontkit(fontkit);
@@ -62,6 +62,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 		subDistrict: { x: 512, y: 142 },
 		district: { x: 70, y: 164 },
 		province: { x: 170, y: 164 },
+		limit_hedgefund_protech: { x: 275, y: 318 },
 	};
 	// const helveticaFont = await pdfDoc.embedFont(PDFDocument.Fonts.Helvetica);
 	data.forEach((value, key) => {
@@ -120,6 +121,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 			village2_name: value?.village?.name || '',
 			witness1_license: `${value.witness1?.title_name}${value.witness1?.first_name} ${value.witness1?.last_name}`,
 			witness2_license: `${value.witness2?.title_name}${value.witness2?.first_name} ${value.witness2?.last_name}`,
+			limit_hedgefund_protech: Helper.formatNumber(value.hedge_fund * 100),
 			...address
 		}
 		console.log(value)

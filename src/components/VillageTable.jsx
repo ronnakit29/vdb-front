@@ -29,7 +29,7 @@ export default function VillageTable({ data, onReload }) {
         {
             key: "emp",
             label: "พนักงาน",
-            format: ({ item }) => <Button size='sm' color='success' variant='flat' onClick={() => router.push('/dashboard/employee?vid=' + item.id)}>รายการพนักงาน</Button>
+            format: ({ item }) => <Button size='sm' color='success' variant='flat' onClick={() => router.push('/dashboard/employee?vid=' + item.code)}>รายการพนักงาน</Button>
         },
         {
             key: "action",
