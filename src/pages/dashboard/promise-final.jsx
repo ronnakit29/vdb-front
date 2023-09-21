@@ -199,10 +199,12 @@ export default function PromiseFinal() {
                 <SectionForm title={"ข้อมูลผู้ค้ำประกัน"}>
                     <div className="grid grid-cols-2 gap-4">
                         {!memberDocs[0].witness1_citizen_id && <UserSlotComponent onClick={() => handleInsertCard('guarantorFirst')}
+                            description={"ผู้ค้ำประกันคนที่ 1"}
                             fullname={insertSlot.guarantorFirst ? insertSlot.guarantorFirst.first_name + ' ' + insertSlot.guarantorFirst.last_name : ''}
                             citizen_id={insertSlot.guarantorFirst ? insertSlot.guarantorFirst.citizen_id : ''}
                         ></UserSlotComponent>}
                         {!memberDocs[0].witness2_citizen_id && <UserSlotComponent onClick={() => handleInsertCard('guarantorSecond')}
+                            description={"ผู้ค้ำประกันคนที่ 2"}
                             fullname={insertSlot.guarantorSecond ? insertSlot.guarantorSecond.first_name + ' ' + insertSlot.guarantorSecond.last_name : ''}
                             citizen_id={insertSlot.guarantorSecond ? insertSlot.guarantorSecond.citizen_id : ''}
                         ></UserSlotComponent>}
@@ -211,10 +213,12 @@ export default function PromiseFinal() {
                 <SectionForm title={"ข้อมูลผู้จัดการ/พนักงาน"}>
                     <div className="grid grid-cols-2 gap-4">
                         {!memberDocs[0].manager_citizen_id && <UserSlotComponent onClick={() => handleInsertCard('manager')}
+                            description={"ผู้จัดการ"}
                             fullname={insertSlot.manager ? insertSlot.manager.first_name + ' ' + insertSlot.manager.last_name : ''}
                             citizen_id={insertSlot.manager ? insertSlot.manager.citizen_id : ''}
                         ></UserSlotComponent>}
                         {!memberDocs[0].employee_citizen_id && <UserSlotComponent onClick={() => handleInsertCard('employee')}
+                            description={"พนักงาน"}
                             fullname={insertSlot.employee ? insertSlot.employee.first_name + ' ' + insertSlot.employee.last_name : ''}
                             citizen_id={insertSlot.employee ? insertSlot.employee.citizen_id : ''}
                         ></UserSlotComponent>}
@@ -227,7 +231,7 @@ export default function PromiseFinal() {
                     <Button color='primary' size='lg' onClick={() => router.push('/dashboard/promise-list')} className='items-center gap-2 w-full'>กลับไปหน้ารายการสัญญา</Button>
                     {memberDocs[0]?.status === 0 && <Button color='success' size='lg' onClick={handleUpdateCitizenData} className='items-center gap-2 w-full text-white'><FaCheck /> บันทึกข้อมูลของสัญญานี้</Button>}
                     {memberDocs[0]?.status === 0 && <Button color='success' size='lg' onClick={handleAcceptPromise} className='items-center gap-2 w-full text-white'><FaCheck /> อนุมัติสัญญานี้</Button>}
-                    {memberDocs[0]?.status === 1 && <Button color='success' variant='flat' size='lg' onClick={handleEndPromise} className='items-center gap-2 w-full'><FaCheckDouble /> สิ้นสุดสัญญา</Button>}
+                    {memberDocs[0]?.status === 1 && <Button color='success' variant='flat' size='lg' onClick={setIsInsertCardConfirmEndOpen} className='items-center gap-2 w-full'><FaCheckDouble /> สิ้นสุดสัญญา</Button>}
                     {memberDocs[0]?.status === 1 || memberDocs[0]?.status === 0 && <Button color='danger' variant='ghost' size='lg' onClick={handleCancelPromise} className='items-center gap-2 w-full'><FaTimes /> ยกเลิกสัญญาฉบับนี้</Button>}
                     {memberDocs[0]?.status === 1 && <Button color='danger' variant='ghost' size='lg' onClick={handleOpenPdfDialog} className='items-center gap-2 w-full'><FaFilePdf /> ดาวน์โหลดเอกสารสัญญา</Button>}
 

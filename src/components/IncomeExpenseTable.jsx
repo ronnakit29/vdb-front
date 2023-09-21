@@ -32,17 +32,18 @@ export default function IncomeExpenseTable({ data, onReload }) {
     },
     {
       key: 'total',
-      label: 'รวม',
+      label: 'คงเหลือ',
       format: ({ value, item }) => Helper.formatNumber(item.income - item.expense)
+    },
+    
+    {
+      key: 'withdraw_value',
+      label: 'ยอดถอนเงิน 70%',
+      format: ({ value }) => Helper.formatNumber(value)
     },
     {
       key: 'description',
-      label: 'รายละเอียด'
-    },
-    {
-      key: 'withdraw_value',
-      label: 'ยอดเงิน',
-      format: ({ value }) => Helper.formatNumber(value)
+      label: 'หมายเหตุ'
     },
     {
       key: 'created_at',
@@ -50,10 +51,14 @@ export default function IncomeExpenseTable({ data, onReload }) {
       format: ({ value }) => Helper.formatDate(value)
     },
     {
-      key: 'delete',
-      label: '',
-      format: ({ item }) => <Button size='sm' color='danger' variant='flat' onClick={() => handleDeleteIncomeExpenses(item.id)}>ลบ</Button>
+      key: "manager_name",
+      label: "ผู้จัดการ"
     }
+    // {
+    //   key: 'delete',
+    //   label: '',
+    //   format: ({ item }) => <Button size='sm' color='danger' variant='flat' onClick={() => handleDeleteIncomeExpenses(item.id)}>ลบ</Button>
+    // }
   ]
   return (
     <TableComponent columns={headers} rows={data} onReload={onReload} />

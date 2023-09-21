@@ -46,7 +46,7 @@ export default function ReportIncomeExpense() {
             dispatch(showToast("กรุณากรอกข้อมูลให้ครบถ้วน", "bg-red-500", 3000))
             return;
         }
-        dispatch(showConfirm("ยืนยันการบันทึก, ในขั้นตอนต่อไปคุณจะต้องเสียบบัตรประจำตัวของผู้จัดการ", () => {
+        dispatch(showConfirm("(สำคัญ : สำหรับผู้จัดการเท่านั้น หากไม่ใช่ทำรายการโดยผู้จัดการโปรดระบุสาเหตุ) ยืนยันการบันทึก, ในขั้นตอนต่อไปคุณจะต้องเสียบบัตรประจำตัวของผู้จัดการ", () => {
             setReadCardManagerIsOpen(true)
         }))
     }
@@ -92,11 +92,11 @@ export default function ReportIncomeExpense() {
                         <Input placeholder='กรอกข้อมูล' label="ถอน 70%" variant='bordered' value={formData.withdraw_value} onChange={e => setFormData({ ...formData, withdraw_value: e.target.value })}></Input>
                     </div>
                     <div className="col-span-3">
-                        <Input placeholder='กรอกข้อมูล' label="รายละเอียด" variant='bordered' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })}></Input>
+                        <Input placeholder='กรอกข้อมูล' label="หมายเหตุ" variant='bordered' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })}></Input>
                     </div>
                     <div className="flex items-center">
                         <Button color="success" size='lg' className='text-white w-full' onClick={() => handleConfirmSaveData()}
-                        >บันทึกรายการ</Button>
+                        >บันทึกรายการ/ผู้จัดการเสียบบัตร</Button>
                     </div>
                 </div>
             </div>

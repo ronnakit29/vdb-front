@@ -24,7 +24,8 @@ function UserDialog() {
         role: "",
         tel: "",
         email: "",
-        village_code: ""
+        village_code: "",
+        citizen_id: ""
     }
     const roles = [
         {
@@ -69,16 +70,21 @@ function UserDialog() {
     return (
         <DialogComponent isOpen={userDialog} title={userTitle} onClose={() => handleClose()}>
             <form onSubmit={onSubmit} className='flex flex-col gap-4'>
+                <Input label="เลขบัตรประชาชน" placeholder="เลขบัตรประชาชน" value={formData.citizen_id} onChange={(e) => setFormData({ ...formData, citizen_id: e.target.value })} />
                 <Input label="ชื่อผู้ใช้งาน" placeholder="ชื่อผู้ใช้งาน" value={formData.username} onChange={(e) => setFormData({ ...formData, username: e.target.value })} />
                 <Input label="รหัสผ่าน" placeholder="รหัสผ่าน" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
                 <Input label="ชื่อ-นามสกุล" placeholder="ชื่อ-นามสกุล" value={formData.fullname} onChange={(e) => setFormData({ ...formData, fullname: e.target.value })} />
-                <Select label="ตำแหน่ง" placeholder="ตำแหน่ง" value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })}>
-                    {roles.map((i, key) => <SelectItem key={key} value={i.value} >{i.label}</SelectItem>)}
+                <Select label="ตำแหน่ง" placeholder="ตำแหน่ง" value={formData.role}>
+                    {roles.map((i, key) => <SelectItem key={key} value={i.value}
+                        onClick={() => setFormData({ ...formData, role: i.value })}
+                    >{i.label}</SelectItem>)}
                 </Select>
                 <Input label="เบอร์โทร" placeholder="เบอร์โทร" value={formData.tel} onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
                 <Input label="อีเมล" placeholder="อีเมล" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                <Select label="หมู่บ้าน" placeholder="หมู่บ้าน" value={formData.village_code} onChange={(e) => setFormData({ ...formData, village_code: e.target.value })}>
-                    {villageList.map((i, key) => <SelectItem key={key} value={i.code} >{i.name}</SelectItem>)}
+                <Select label="หมู่บ้าน" placeholder="หมู่บ้าน" value={formData.village_code}>
+                    {villageList.map((i, key) => <SelectItem key={key} value={i.code}
+                        onClick={() => setFormData({ ...formData, village_code: i.code })}
+                    >{i.name}</SelectItem>)}
                 </Select>
                 <Button color='success' type='submit' className='text-white'>บันทึก</Button>
             </form>
