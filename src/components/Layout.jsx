@@ -12,6 +12,7 @@ import ConfirmDialog from './ConfirmDialog';
 import PDFDialogDialog from './PDFDialog';
 import UserDialog from './UserDialog';
 import VillageDialog from './VillageDialog';
+import SupportProgram from './SupportProgram'
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -45,6 +46,7 @@ export default function Layout({ children }) {
       <PDFDialogDialog />
       <UserDialog />
       <VillageDialog />
+      <SupportProgram />
     </div>
   )
 }
