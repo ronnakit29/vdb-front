@@ -313,7 +313,7 @@ export default function PromiseForm() {
                         {/* maximum loan multiple_deposit */}
                     </div>
                     <div>
-                        <Input size='lg' variant='bordered' color='primary' type='number' readOnly min={0} step={1} label="สูงสุดที่สามารถกู้ได้ (กี่เท่าของจำนวนฝาก)" placeholder="กรอกสูงสุดที่สามารถกู้ได้ (กี่เท่าของจำนวนฝาก)" name="multiple_deposit" value={formData.multiple_deposit} onChange={handleChange} />
+                        <Input size='lg' variant='bordered' color='primary' type='number' readOnly={router.query.type !== 'business'} min={0} step={1} label="สูงสุดที่สามารถกู้ได้ (กี่เท่าของจำนวนฝาก)" placeholder="กรอกสูงสุดที่สามารถกู้ได้ (กี่เท่าของจำนวนฝาก)" name="multiple_deposit" value={formData.multiple_deposit} onChange={handleChange} />
                     </div>
                 </div>
             </SectionForm>

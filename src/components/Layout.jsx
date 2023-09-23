@@ -13,7 +13,7 @@ import PDFDialogDialog from './PDFDialog';
 import UserDialog from './UserDialog';
 import VillageDialog from './VillageDialog';
 import SupportProgram from './SupportProgram'
-
+import CidReader from './CidReader'
 export default function Layout({ children }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -47,6 +47,7 @@ export default function Layout({ children }) {
       <UserDialog />
       <VillageDialog />
       <SupportProgram />
+      {/* <CidReader /> */}
     </div>
   )
 }
