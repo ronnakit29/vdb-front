@@ -274,6 +274,7 @@ export default function PromiseForm() {
             amount: ""
         })
     }, [formData.deposit_amount, formData.multiple_deposit])
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL
     return (
         insertSlot?.member ? <div className='p-8'>
             <div className='mb-5'>
@@ -284,7 +285,7 @@ export default function PromiseForm() {
             <SectionForm title={"ข้อมูลผู้ทำสัญญา"}>
                 <div className="flex gap-4">
                     <div className="h-full">
-                        <ImageToBase64Converter imageUrl={insertSlot.member?.imageUrl} height={'200px'} className="w-32 h-32 rounded-full" />
+                        <ImageToBase64Converter imageUrl={insertSlot.member?.citizen_id ? apiUrl + "/member/image/" + insertSlot.member?.citizen_id : ''} height={'200px'} className="w-32 h-32 rounded-full" />
                     </div>
                     <div className="grid grid-cols-3 gap-4 w-full">
                         <div>
