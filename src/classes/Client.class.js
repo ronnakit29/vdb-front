@@ -82,8 +82,8 @@ class Client {
 	async createIncomeExpense(data) {
 		return await this.call("POST", "/api/income-expenses/create", data);
 	}
-	async getIncomeExpenseList(vid) {
-		return await this.call("GET", "/api/income-expenses/list?vid=" + vid);
+	async getIncomeExpenseList(vid, startDate, endDate) {
+		return await this.call("GET", "/api/income-expenses/list?vid=" + vid + "&startDate=" + startDate + "&endDate=" + endDate);
 	}
 	async checkManager(citizen_id) {
 		return await this.call("GET", `/api/user/checkManager?citizen_id=${citizen_id}`);

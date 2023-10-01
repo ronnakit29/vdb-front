@@ -2,10 +2,10 @@ import { client } from "@/classes";
 import { setIncomeExpensesList } from "../slices/incomeExpensesSlice";
 import { showToast } from "./toastAction";
 
-export function getIncomeExpenseList(vid) {
+export function getIncomeExpenseList(vid, startDate, endDate) {
 	return async (dispatch) => {
 		try {
-			const response = await client.getIncomeExpenseList(vid)
+			const response = await client.getIncomeExpenseList(vid, startDate, endDate)
 			dispatch(setIncomeExpensesList(response.data))
 		} catch (error) {
 			dispatch(showToast(error, "bg-red-500", 3000))

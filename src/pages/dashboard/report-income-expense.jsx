@@ -12,6 +12,8 @@ import { client } from '@/classes'
 import { useRouter } from 'next/router'
 import { createIncomeExpenses, getIncomeExpenseList } from '@/store/actions/incomeExpensesAction'
 import { showConfirm } from '@/store/actions/confirmAction'
+import { getVillageList } from '@/store/actions/villageAction'
+import moment from 'moment'
 
 export default function ReportIncomeExpense() {
     const initFormData = {
@@ -55,8 +57,24 @@ export default function ReportIncomeExpense() {
     }
     const user = useSelector(state => state.user.user)
     function init() {
-        dispatch(getIncomeExpenseList(user.village.id))
+        dispatch(getIncomeExpenseList(villageSelect || user.village.id, startDate, endDate))
+        dispatch(getVillageList())
     }
+    const [startDate, setStartDate] = React.useState(moment().startOf('month').format('YYYY-MM-DD'));
+    const [endDate, setEndDate] = React.useState(moment().endOf('month').format('YYYY-MM-DD'));
+    useEffect(() => {
+        init()
+    }, [startDate, endDate])
+    const villageList = useSelector((state) => state.village.villageList);
+    const [villageSelect, setVillageSelect] = React.useState('');
+    useEffect(() => {
+        if (villageList.length > 0 && !villageSelect) {
+            setVillageSelect(villageList[0].id)
+        }
+    }, [villageList])
+    useEffect(() => {
+        init()
+    }, [villageSelect])
     useEffect(() => {
         if (router.isReady) {
             init();
@@ -74,6 +92,12 @@ export default function ReportIncomeExpense() {
                 </div>
             </div>
             <Divider />
+            <div className="px-8 py-2">
+                <select placeholder="เลือกหมู่บ้าน" className='w-full bg-gray-50 transition-all hover:bg-gray-100 px-4 py-2 rounded-xl outline-none'
+                    value={villageSelect} onChange={(e) => setVillageSelect(e.target.value)}>
+                    {villageList.map((i, key) => <option key={key} value={i.id}>{i.code} | {i.name}</option>)}
+                </select>
+            </div>
             <div className=' py-4'>
                 <div className="px-8 py-2">
                     <h2 className="text-xl font-semibold">บันทึกรายรับ-รายจ่าย</h2>
@@ -100,6 +124,15 @@ export default function ReportIncomeExpense() {
                     </div>
                 </div>
             </div>
+            <Divider />
+            <div className='px-8 py-4 flex gap-4 items-center bg-gray-100'>
+                <Input variant='bordered' type='date' className='w-full bg-white rounded-xl' label="วันที่เริ่มต้น" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                <Input variant='bordered' type='date' className='w-full bg-white rounded-xl' label="วันที่สิ้นสุด" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                <Button size='lg' color='primary' onClick={init}>
+                    รีเฟรช
+                </Button>
+            </div>
+            <Divider />
             <div className="px-8 mt-4">
                 <IncomeExpenseTable data={incomeExpensesList} onReload={init}></IncomeExpenseTable>
             </div>
