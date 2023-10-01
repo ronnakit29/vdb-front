@@ -56,7 +56,7 @@ export default function PromiseList() {
     const villageList = useSelector((state) => state.village.villageList);
     const [villageSelect, setVillageSelect] = React.useState('');
     useEffect(() => {
-        if (villageList.length > 0){
+        if (villageList.length > 0 && !villageSelect) {
             setVillageSelect(villageList[0].id)
         }
     }, [villageList])
@@ -73,9 +73,10 @@ export default function PromiseList() {
                 </div>
             </div>
             <div className="px-8 py-2">
-                <Select label="เลือกหมู่บ้าน"  className='w-full' value={villageSelect} onChange={(e) => setVillageSelect(e)}>
-                    {villageList.map((i, key) => <SelectItem key={key} value={i.id}>{i.name}</SelectItem>)}
-                </Select>
+                <select placeholder="เลือกหมู่บ้าน" className='w-full bg-gray-50 transition-all hover:bg-gray-100 px-4 py-2 rounded-xl outline-none'
+                    value={villageSelect} onChange={(e) => setVillageSelect(e.target.value)}>
+                    {villageList.map((i, key) => <option key={key} value={i.id}>{i.code} | {i.name}</option>)}
+                </select>
             </div>
             <div className='flex px-8 py-4 gap-4'>
                 {typeList.map((i, key) => <Button key={key} color={type === i.value ? 'primary' : 'default'} onClick={() => router.push(`/dashboard/promise-list?type=${i.value}`)}>{i.label}</Button>)}

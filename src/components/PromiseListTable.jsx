@@ -24,7 +24,7 @@ export default function PromiseListTable({ data, onReload }) {
             label: 'วันที่เริ่มสัญญา',
             format: ({ value, item }) => <div className='flex flex-col'>
                 <div className='font-semibold'>เริ่ม: {Helper.formatDate(item.start_date)}</div>
-                <div className='text-green-600'>สิ้นสุด: {Helper.formatDate(item.end_date)}</div>
+                <div className='text-green-600'>สิ้นสุด: {Helper.formatDate(item.expired_date)}</div>
             </div>
         },
         {
