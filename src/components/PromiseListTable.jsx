@@ -93,6 +93,7 @@ export default function PromiseListTable({ data, onReload }) {
             type: typeTxt[i.type],
             amount: Helper.formatNumber(i.amount),
             interest: Helper.formatNumber(i.interest) + "%",
+            hedge_fund: Helper.formatNumber(i.hedge_fund),
             xinterest: Helper.formatNumber(i.amount * i.interest / 100),
             period: Helper.formatNumber(i.period) + " งวด",
         }
