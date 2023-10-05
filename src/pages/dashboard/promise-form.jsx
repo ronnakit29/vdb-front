@@ -25,7 +25,23 @@ export function SectionForm({ children, title, isRequireTitle = false }) {
     </div>);
 }
 
-
+export const guaranteeType = [
+    {
+        name: "ผู้ค้ำประกัน",
+        value: "guarantor",
+        accept: ['long', 'short', 'business']
+    },
+    {
+        name: "หลักทรัพย์",
+        value: "collateral",
+        accept: ['business']
+    },
+    {
+        name: "เงินฝาก",
+        value: "deposit",
+        accept: ['business']
+    }
+]
 
 function ReportCardComponent({ typeTxt, value, hedge_fund, total, index, onChange }) {
     return (<Card className="bg-white" shadow='sm' >
@@ -86,8 +102,8 @@ export default function PromiseForm() {
         witness1_citizen_id: '',
         witness2_citizen_id: '',
         witness3_citizen_id: '',
-        guaranteeType: 'guarantor',
-        guaranteeValue: '',
+        guarantee_type: 'guarantor',
+        guarantee_value: '',
     });
 
     const handleChange = (e) => {
@@ -277,23 +293,15 @@ export default function PromiseForm() {
         })
     }, [formData.deposit_amount, formData.multiple_deposit])
     const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL
-    const guaranteeType = [
-        {
-            name: "ผู้ค้ำประกัน",
-            value: "guarantor",
-            accept: ['long', 'short', 'business']
-        },
-        {
-            name: "หลักทรัพย์",
-            value: "collateral",
-            accept: ['business']
-        },
-        {
-            name: "เงินฝาก",
-            value: "deposit",
-            accept: ['business']
-        }
-    ]
+
+    // filter by accept type
+    const acceptGuaranteeType = guaranteeType.filter(i => i.accept.includes(router.query.type))
+    useEffect(() => {
+        setFormData({
+            ...formData,
+            guarantee_value: "",
+        })
+    }, [formData.guarantee_type])
     return (
         insertSlot?.member ? <div className='p-8'>
             <div className='mb-5'>
@@ -329,7 +337,7 @@ export default function PromiseForm() {
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         {/* deposit amount */}
-                        <Input size='lg' variant='bordered' color='primary' autoFocus label="ยอดเงินฝาก" placeholder="กรอกยอดเงินฝาก" name="deposit_amount" value={formData.deposit_amount} onChange={handleChange} errorMessage="กรุณาระบุข้อมูลส่วนนี้" />
+                        <Input size='lg' variant='bordered' color='primary' autoFocus label="ยอดเงินฝาก" placeholder="กรอกยอดเงินฝาก" name="deposit_amount" value={formData.deposit_amount} onChange={handleChange} errorMessage="กรุณาระบุข้อมูลส่วนนี้" onScroll={(e) => e.target.blur()} />
                         {/* maximum loan multiple_deposit */}
                     </div>
                     <div>
@@ -343,7 +351,7 @@ export default function PromiseForm() {
                         <Input label="ประเภทการกู้" placeholder="กรอกประเภทการกู้" name="loan_type" value={typeTxt[typeQuery]} readOnly />
                     </div>
                     <div className='col-span-3 flex flex-col gap-2'>
-                        <Input size='lg' variant='bordered' color='primary' type='number' step={1} min={0} label="ยอดเงินกู้" placeholder="กรอกยอดเงินกู้" name="amount" value={formData.amount} onChange={handleChange} />
+                        <Input size='lg' variant='bordered' color='primary' type='number' step={1} min={0} label="ยอดเงินกู้" placeholder="กรอกยอดเงินกู้" name="amount" value={formData.amount} onChange={handleChange} onWheel={(e) => e.target.blur()} />
                         {formData.amount && <div className='px-2 py-1 rounded-xl bg-gray-50 text-sky-500'>
                             ({THBText(formData.amount)})
                         </div>}
@@ -353,7 +361,7 @@ export default function PromiseForm() {
                         <Input size='lg' variant='bordered' color='primary' label="วัตถุประสงค์การกู้" placeholder="กรอกวัตถุประสงค์การกู้" name="reason" value={formData.reason} onChange={handleChange} />
                     </div>
                     <div>
-                        <Input variant='bordered' color='primary' type='number' min={0} step={1} label="จำนวนงวด" placeholder="กรอกจำนวนงวด" name="period" value={formData.period} onChange={handleChange} />
+                        <Input variant='bordered' color='primary' type='number' min={0} step={1} label="จำนวนงวด" placeholder="กรอกจำนวนงวด" name="period" value={formData.period} onChange={handleChange} onWheel={(e) => e.target.blur()} />
                     </div>
                     <div>
                         <Input label="วันที่กู้" placeholder="กรอกวันที่กู้" name="datetime" value={formData.datetime} readOnly />
@@ -365,11 +373,16 @@ export default function PromiseForm() {
             </SectionForm>
             <SectionForm title={"ประเภทการค้ำประกัน"} isRequireTitle={true}>
                 <div className="flex gap-4">
-                    
+                    {acceptGuaranteeType.map((i, key) => <div key={key} className={`border-2 cursor-pointer rounded-lg px-3 py-1 ${formData.guarantee_type === i.value ? 'border-success-500 bg-success-50' : ''}`} onClick={() => setFormData({ ...formData, guarantee_type: i.value })}>
+                        {i.name}
+                    </div>)}
                 </div>
+                {formData.guarantee_type === "collateral" && <div className="flex gap-4 mt-4">
+                    <Input label="รายละเอียดหลักทรัพย์" placeholder="กรอกรายละเอียดหลักทรัพย์" name="guarantee_value" value={formData.guarantee_value} onChange={(e) => setFormData({ ...formData, guarantee_value: e.target.value })} />
+                </div>}
             </SectionForm>
 
-            <SectionForm title={"ข้อมูลผู้ค้ำประกัน"} isRequireTitle={true}>
+            {formData.guarantee_type === "guarantor" && <SectionForm title={"ข้อมูลผู้ค้ำประกัน"} isRequireTitle={true}>
                 <div className="grid grid-cols-3 gap-4">
                     <UserSlotComponent onClick={() => handleInsertCard('guarantorFirst')}
                         fullname={insertSlot.guarantorFirst ? insertSlot.guarantorFirst.first_name + ' ' + insertSlot.guarantorFirst.last_name : ''}
@@ -380,7 +393,7 @@ export default function PromiseForm() {
                         citizen_id={insertSlot.guarantorSecond ? insertSlot.guarantorSecond.citizen_id : ''}
                     ></UserSlotComponent>
                 </div>
-            </SectionForm>
+            </SectionForm>}
             <SectionForm title={"สรุปข้อมูลการกู้เงิน"} isRequireTitle={true}>
                 <div className="grid grid-cols-2 gap-4">
                     {promiseList.map((i, key) => <ReportCardComponent index={key + 1} total={promiseList.length} key={key} typeTxt={typeTxt[i.type]} value={i.value} hedge_fund={i.hedge_fund}

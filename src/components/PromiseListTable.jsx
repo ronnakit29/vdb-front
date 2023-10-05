@@ -3,6 +3,7 @@ import TableComponent from './TableComponent'
 import Helper from '@/classes/Helper.class'
 import { Button } from '@nextui-org/react'
 import { useRouter } from 'next/router'
+import moment from 'moment'
 
 export default function PromiseListTable({ data, onReload }) {
     const typeTxt = {
@@ -12,6 +13,11 @@ export default function PromiseListTable({ data, onReload }) {
     }
     const router = useRouter()
     const headers = [
+        {
+            key: "timestamp",
+            label: "วันเวลา",
+            format: ({ value }) => moment(value).format("DD/MM/YYYY HH:mm:ss")
+        },
         {
             key: 'id',
             label: 'หมายเลขสัญญา',
@@ -23,8 +29,8 @@ export default function PromiseListTable({ data, onReload }) {
             key: 'start_date_end',
             label: 'วันที่เริ่มสัญญา',
             format: ({ value, item }) => <div className='flex flex-col'>
-                <div className='font-semibold'>เริ่ม: {Helper.formatDate(item.start_date)}</div>
-                <div className='text-green-600'>สิ้นสุด: {Helper.formatDate(item.expired_date)}</div>
+                <div className='font-semibold'>เริ่ม: {moment(item.start_date).format("DD/MM/YYYY")}</div>
+                <div className='text-green-600'>สิ้นสุด: {moment(item.expired_date).format("DD/MM/YYYY")}</div>
             </div>
         },
         {

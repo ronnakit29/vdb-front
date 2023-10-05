@@ -4,7 +4,7 @@ import { acceptPromiseDocument, cancelPromiseDocument, checkQuota, endPromiseDoc
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SectionForm, UserSlotComponent } from './promise-form'
+import { SectionForm, UserSlotComponent, guaranteeType } from './promise-form'
 import { Button, Divider } from '@nextui-org/react'
 import { setDialog, setTitle } from '@/store/slices/utilSlice'
 import { setInsertSlot, setInsertSlotType } from '@/store/slices/memberSlice'
@@ -138,6 +138,7 @@ export default function PromiseFinal() {
         readTemplatePDF(memberDocs, "เอกสารสัญญาของ " + memberDocs[0].loaner.first_name + " " + memberDocs[0].loaner.last_name + " เลขที่ " + memberDocs[0].id + "/" + memberDocs[0].promise_year)
     }
     const [isInsertCardConfirmEndOpen, setIsInsertCardConfirmEndOpen] = useState(false)
+    const findGuaranteeType = (type) => guaranteeType.find(i => i.value === type)
     return (
         <div>
             <div className="p-8 bg-gray-100">
@@ -176,7 +177,7 @@ export default function PromiseFinal() {
                                 <div className="w-44">ประเภทสัญญา:</div> {typeTxt[i.type]}
                             </li>
                             <li className='flex items-center'>
-                                <div className="w-44">วันที่ทำสัญญา:</div> {Helper.formatDate(i.datetime)}
+                                <div className="w-44">วันที่ทำสัญญา:</div> {Helper.formatDate(i.timestamp)}
                             </li>
                             <li className='flex items-center'>
                                 <div className="w-44">วันที่ครบกำหนด:</div> {Helper.formatDate(i.expired_date)}
@@ -187,6 +188,12 @@ export default function PromiseFinal() {
                             <li className='flex items-center'>
                                 <div className="w-44">เหตุผลการกู้ยืม:</div> <span className="underline">{i.reason}</span>
                             </li>
+                            <li className='flex items-center'>
+                                <div className="w-44">ประเภทการค้ำประกัน:</div> <span className="underline">{findGuaranteeType(i.guarantee_type)?.name || "-"}</span>
+                            </li>
+                            <li className='flex items-center'>
+                                <div className="w-44">รายละเอียดการค้ำ:</div> <span className="underline">{i.guarantee_value}</span>
+                            </li>
                             <li>
                                 <li className='flex items-center font-semibold text-lg'>
                                     {/* status */}
@@ -196,7 +203,7 @@ export default function PromiseFinal() {
                         </ul>
                     </div>)}
                 </div>
-                <SectionForm title={"ข้อมูลผู้ค้ำประกัน"}>
+                {memberDocs[0].guarantee_type === "guarantor" && <SectionForm title={"ข้อมูลผู้ค้ำประกัน"}>
                     <div className="grid grid-cols-2 gap-4">
                         {!memberDocs[0].witness1_citizen_id && <UserSlotComponent onClick={() => handleInsertCard('guarantorFirst')}
                             description={"ผู้ค้ำประกันคนที่ 1"}
@@ -209,7 +216,7 @@ export default function PromiseFinal() {
                             citizen_id={insertSlot.guarantorSecond ? insertSlot.guarantorSecond.citizen_id : ''}
                         ></UserSlotComponent>}
                     </div>
-                </SectionForm>
+                </SectionForm>}
                 <SectionForm title={"ข้อมูลผู้จัดการ/พนักงาน"}>
                     <div className="grid grid-cols-2 gap-4">
                         {!memberDocs[0].manager_citizen_id && <UserSlotComponent onClick={() => handleInsertCard('manager')}

@@ -25,6 +25,7 @@ export default function Sidebar() {
         client.setAuth(null)
         router.push('/login')
     }
+    const asPath = router.asPath
     return (
         <aside className='h-screen bg-white shadow-xl w-full max-w-[250px]'>
             <div className="p-8">
@@ -48,6 +49,8 @@ export default function Sidebar() {
                         }}
                     >
                         {(i?.children || []).map((x, xkey) => <ListboxItem
+                        // asPath
+                            className={asPath === x.path ? 'bg-default-100/80' : ''}
                             onClick={() => router.push(x.path)}
                             key={xkey} endContent={<div className="flex items-center gap-1 text-default-400">
                                 <FaChevronRight />
@@ -70,6 +73,7 @@ export default function Sidebar() {
                 >
                     <ListboxItem
                         onClick={() => router.push(i.path)}
+                        className={asPath === i.path ? 'bg-default-100/80' : ''}
                         endContent={<div className="flex items-center gap-1 text-default-400">
                             <FaChevronRight />
                         </div>}
