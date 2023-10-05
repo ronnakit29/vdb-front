@@ -84,6 +84,7 @@ export default function PromiseListTable({ data, onReload }) {
     const dataExport = data?.map(i => {
         return {
             ...i,
+            running_number: `${i.running_number}/${i.promise_year}`,
             timestamp: moment(i.timestamp).format("DD/MM/YYYY HH:mm:ss"),
             start_date_end: `เริ่ม: ${moment(i.start_date).format("DD/MM/YYYY")} สิ้นสุด: ${moment(i.expired_date).format("DD/MM/YYYY")}`,
             status: i.status === 1 ? "อยู่ในสัญญา" : i.status === 0 ? "สัญญาไม่สมบูรณ์" : i.status === 2 ? "สัญญาสิ้นสุด" : "ยกเลิกสัญญา",
