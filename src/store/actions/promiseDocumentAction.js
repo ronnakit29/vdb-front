@@ -1,5 +1,5 @@
 import { client } from "@/classes"
-import { setAnalysisReport, setMemberDocs, setPromiseDocumentList } from "../slices/promiseDocumentSlice";
+import { setAnalysisReport, setGuarantee, setMemberDocs, setPromiseDocumentList } from "../slices/promiseDocumentSlice";
 import { showToast } from "./toastAction";
 
 export function getPromiseDocumentList(type, startDate, endDate, vid) {
@@ -119,6 +119,7 @@ export function getPromiseDocumentListByCitizenId(citizen_id) {
 		try {
 			const response = await client.getPromiseDocumentListByCitizenId(citizen_id);
 			dispatch(setPromiseDocumentList(response.data))
+			dispatch(setGuarantee(response.guarantee))
 		} catch (error) {
 			dispatch(showToast(error?.response?.data?.error || error?.message || 'เกิดข้อผิดพลาด'))
 		}

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { checkQuota as checkPromiseQuota, getPromiseDocumentList, getPromiseDocumentListByCitizenId } from '@/store/actions/promiseDocumentAction'
 import { useRouter } from 'next/router'
 import PromiseListTable from '@/components/PromiseListTable'
-import { setPromiseDocumentList } from '@/store/slices/promiseDocumentSlice'
+import { setGuarantee, setPromiseDocumentList } from '@/store/slices/promiseDocumentSlice'
 export default function CheckQuotaPage() {
     const [readCardIsOpen, setReadCardIsOpen] = React.useState(false)
     const dispatch = useDispatch()
@@ -23,12 +23,14 @@ export default function CheckQuotaPage() {
         dispatch(getPromiseDocumentListByCitizenId(citizen_id))
     }
     const documentPromiseList = useSelector(state => state.promiseDocument.promiseDocumentList)
+    const guaranteeList = useSelector(state => state.promiseDocument.promiseGuarantee)
     const router = useRouter()
     useEffect(() => {
         if (router.isReady) {
             setQuotaData({})
             setPersonalData({})
             dispatch(setPromiseDocumentList([]))
+            dispatch(setGuarantee([]))
         }
     }, [router.isReady])
     return (
@@ -43,6 +45,10 @@ export default function CheckQuotaPage() {
                     {personalData?.first_name} {personalData?.last_name} | หมายเลขบัตรนี้สามารถค้ำประกันได้อีก <span className="text-xl font-bold">{quotaData?.data}</span> คน
                 </div>}
                 <PromiseListTable data={documentPromiseList}></PromiseListTable>
+                <div className="py-8">
+                    <h1 className='text-2xl font-semibold mb-2'>รายการสัญญาที่กำลังค้ำประกัน</h1>
+                    <PromiseListTable data={guaranteeList}></PromiseListTable>
+                </div>
             </div>
             <div></div>
             <ReadCardDialog isOpen={readCardIsOpen} onClose={() => setReadCardIsOpen(false)} callback={(e) => checkQuota(e)} />

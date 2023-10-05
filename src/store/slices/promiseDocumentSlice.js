@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	promiseDocument: null,
 	promiseDocumentList: [],
+	promiseGuarantee: [],
 	analysisReport: {
 		count: 0,
 		sum: 0,
@@ -25,9 +26,12 @@ const promiseDocumentSlice = createSlice({
 		},
 		setMemberDocs: (state, action) => {
 			state.memberDocs = action.payload;
-		}
+		},
+		setGuarantee: (state, action) => {
+			state.promiseGuarantee = action.payload;
+		},
 	},
 });
 
-export const { setPromiseDocument, setPromiseDocumentList, setAnalysisReport, setMemberDocs } = promiseDocumentSlice.actions;
+export const { setPromiseDocument, setPromiseDocumentList, setAnalysisReport, setMemberDocs, setGuarantee } = promiseDocumentSlice.actions;
 export default promiseDocumentSlice.reducer;
