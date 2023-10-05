@@ -6,6 +6,7 @@ import userSlice from "./userSlice";
 import utilSlice from "./utilSlice";
 import villageSlice from "./villageSlice";
 import analysisSlice from "./analysisSlice";
+import promiseYearSlice from "./promiseYearSlice";
 const { combineReducers } = require("@reduxjs/toolkit");
 
 const appReducer = combineReducers({
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
 	incomeExpenses: incomeExpensesSlice,
 	village: villageSlice,
 	analysis: analysisSlice,
+	promiseYear: promiseYearSlice
 });
 
 const rootReducer = (state, action) => {

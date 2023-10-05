@@ -35,6 +35,16 @@ const routes = [
 				title: "รายการสัญญาทั้งหมด",
 				path: "/dashboard/promise-list",
 				key: "promise-list-all"
+			},
+			{
+				title: "เช็คโควต้า/สัญญา",
+				path: "/dashboard/check-quota",
+				key: "check-quota"
+			},
+			{
+				title: "ปีสัญญา",
+				path: "/dashboard/promise-year",
+				key: "promise-year"
 			}
 		]
 	},

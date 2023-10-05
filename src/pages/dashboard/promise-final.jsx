@@ -171,7 +171,7 @@ export default function PromiseFinal() {
                         <Divider />
                         <ul className='flex flex-col gap-2 mt-2' key={key} >
                             <li className='flex items-center'>
-                                <div className="w-44">เลขที่:</div> {i.id}/{i.promise_year}
+                                <div className="w-44">เลขที่:</div> {i.running_number}/{i.promise_year}
                             </li>
                             <li className='flex items-center'>
                                 <div className="w-44">ประเภทสัญญา:</div> {typeTxt[i.type]}

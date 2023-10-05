@@ -67,6 +67,9 @@ class Client {
 	async getPromiseDocumentByGroupId(groupId) {
 		return await this.call("GET", `/api/promise-document/group/${groupId}`);
 	}
+	async getPromiseDocumentListByCitizenId(citizen_id) {
+		return await this.call("GET", `/api/promise-document/member/${citizen_id}`);
+	}
 	async cancelPromiseDocument(groupId) {
 		return await this.call("POST", `/api/promise-document/cancel/${groupId}`);
 	}
@@ -120,6 +123,12 @@ class Client {
 	}
 	async getVillage(id) {
 		return await this.call("GET", "/api/village/" + id);
+	}
+	async getPromiseYear() {
+		return await this.call("GET", "/api/promise-year");
+	}
+	async updatePromiseYear(year) {
+		return await this.call("POST", "/api/promise-year", { year });
 	}
 }
 

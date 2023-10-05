@@ -13,11 +13,12 @@ export function getPromiseDocumentList(type, startDate, endDate, vid) {
 	}
 }
 
-export function checkQuota(citizen_id, errorCallback) {
+export function checkQuota(citizen_id, errorCallback, successCallback) {
 	return async (dispatch) => {
 		try {
 			const response = await client.checkQuota(citizen_id);
 			dispatch(showToast('หมายเลขบัตรนี้สามารถค้ำได้อีก ' + response.data + ' คน', 'bg-green-500', 3000))
+			successCallback && successCallback(response)
 		} catch (error) {
 			errorCallback && errorCallback()
 			dispatch(showToast(error?.response?.data?.error || error?.message || error || 'เกิดข้อผิดพลาด', 'bg-red-500', 3000))
@@ -113,3 +114,13 @@ export function acceptPromiseDocument(groupId) {
 	}
 }
 
+export function getPromiseDocumentListByCitizenId(citizen_id) {
+	return async (dispatch) => {
+		try {
+			const response = await client.getPromiseDocumentListByCitizenId(citizen_id);
+			dispatch(setPromiseDocumentList(response.data))
+		} catch (error) {
+			dispatch(showToast(error?.response?.data?.error || error?.message || 'เกิดข้อผิดพลาด'))
+		}
+	}
+}
