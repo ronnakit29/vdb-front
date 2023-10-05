@@ -61,6 +61,11 @@ export default function PromiseListTable({ data, onReload }) {
             format: ({ value }) => Helper.formatNumber(value)
         },
         {
+            key: 'period',
+            label: 'ระยะเวลาผ่อนชำระ',
+            format: ({ value }) => Helper.formatNumber(value) + " งวด"
+        },
+        {
             key: 'interest',
             label: 'อัตราดอกเบี้ย',
             format: ({ value }) => Helper.formatNumber(value) + "%"
@@ -69,11 +74,6 @@ export default function PromiseListTable({ data, onReload }) {
             key: 'xinterest',
             label: 'ดอกเบี้ยต่อเดือน',
             format: ({ value, item }) => Helper.formatNumber(item.amount * item.interest / 100)
-        },
-        {
-            key: 'period',
-            label: 'ระยะเวลาผ่อนชำระ',
-            format: ({ value }) => Helper.formatNumber(value) + " งวด"
         },
         {
             key: 'citizen_id',
