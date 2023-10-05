@@ -10,6 +10,11 @@ const routes = [
 		path: "/",
 		children: [
 			{
+				title: "เช็คโควต้า/สัญญา",
+				path: "/dashboard/check-quota",
+				key: "check-quota"
+			},
+			{
 				title: "สัญญาระยะสั้น",
 				path: "/dashboard?type=short",
 				key: "promise-short"
@@ -35,11 +40,6 @@ const routes = [
 				title: "รายการสัญญาทั้งหมด",
 				path: "/dashboard/promise-list",
 				key: "promise-list-all"
-			},
-			{
-				title: "เช็คโควต้า/สัญญา",
-				path: "/dashboard/check-quota",
-				key: "check-quota"
 			},
 			{
 				title: "ปีสัญญา",
