@@ -41,11 +41,7 @@ const routes = [
 				path: "/dashboard/promise-list",
 				key: "promise-list-all"
 			},
-			{
-				title: "ปีสัญญา",
-				path: "/dashboard/promise-year",
-				key: "promise-year"
-			}
+			
 		]
 	},
 	{
@@ -74,6 +70,11 @@ const routes = [
 				key: "village",
 				title: "รายการหมู่บ้าน",
 				path: "/dashboard/village",
+			},
+			{
+				title: "ปีสัญญา",
+				path: "/dashboard/promise-year",
+				key: "promise-year"
 			}
 		]
 	}
