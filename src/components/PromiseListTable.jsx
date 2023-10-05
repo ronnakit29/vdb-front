@@ -39,11 +39,6 @@ export default function PromiseListTable({ data, onReload }) {
             format: ({ value }) => value === 1 ? <span className="text-green-500">อยู่ในสัญญา</span> : value === 0 ? <span className="text-yellow-500">สัญญาไม่สมบูรณ์</span> : value === 2 ? <span className="text-red-500">สัญญาสิ้นสุด</span> : <span className="text-gray-500">ยกเลิกสัญญา</span>
         },
         {
-            key: 'citizen_id',
-            label: 'เลขปชช.',
-            format: ({ value }) => value
-        },
-        {
             key: 'x',
             label: 'ชื่อผู้กู้',
             format: ({ value, item }) => <div className="flex flex-col">
@@ -58,6 +53,11 @@ export default function PromiseListTable({ data, onReload }) {
         {
             key: 'amount',
             label: 'จำนวนเงิน',
+            format: ({ value }) => Helper.formatNumber(value)
+        },
+        {
+            key: "hedge_fund",
+            label: "ประกันความเสี่ยง",
             format: ({ value }) => Helper.formatNumber(value)
         },
         {
@@ -76,6 +76,11 @@ export default function PromiseListTable({ data, onReload }) {
             format: ({ value }) => Helper.formatNumber(value) + " งวด"
         },
         {
+            key: 'citizen_id',
+            label: 'เลขปชช.',
+            format: ({ value }) => value
+        },
+        {
             key: 'action',
             label: '',
             format: ({ item }) => <Button color='primary' size='sm' onClick={() => router.push(`/dashboard/promise-final?groupId=${item.group_id}`)}>ดูรายละเอียด</Button>
@@ -88,14 +93,14 @@ export default function PromiseListTable({ data, onReload }) {
             timestamp: moment(i.timestamp).format("DD/MM/YYYY HH:mm:ss"),
             start_date_end: `เริ่ม: ${moment(i.start_date).format("DD/MM/YYYY")} สิ้นสุด: ${moment(i.expired_date).format("DD/MM/YYYY")}`,
             status: i.status === 1 ? "อยู่ในสัญญา" : i.status === 0 ? "สัญญาไม่สมบูรณ์" : i.status === 2 ? "สัญญาสิ้นสุด" : "ยกเลิกสัญญา",
-            // citizen_id: i.citizen_id,
             x: `${i.title_name}${i.first_name} ${i.last_name}`,
             type: typeTxt[i.type],
             amount: Helper.formatNumber(i.amount),
-            // interest: Helper.formatNumber(i.interest) + "%",
             hedge_fund: Helper.formatNumber(i.hedge_fund),
-            // xinterest: Helper.formatNumber(i.amount * i.interest / 100),
             period: Helper.formatNumber(i.period) + " งวด",
+            citizen_id: i.citizen_id,
+            interest: Helper.formatNumber(i.interest) + "%",
+            xinterest: Helper.formatNumber(i.amount * i.interest / 100),
         }
     })
     return (
