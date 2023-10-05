@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue, Input, Button } from "@nextui-org/react";
 import { FaFileExcel, FaRedo } from "react-icons/fa";
 import exportToExcel from "../../plugins/excel";
 import { headers } from "../../next.config";
 
-export default function TableComponent({ rows, columns, onReload }) {
+export default function TableComponent({ rows, columns, onReload, excelColumns = [], excelData = null }) {
     const [search, setSearch] = React.useState("");
     // using regex to filter
     const filterRows = (rows, search) => {
@@ -19,7 +19,8 @@ export default function TableComponent({ rows, columns, onReload }) {
     };
     function excelExport() {
         const fileName = `export_data.xlsx`
-        return exportToExcel(rows, columns, fileName)
+        console.log(columns);
+        exportToExcel(excelData || rows, columns, fileName)
     }
     return (
         <div>
