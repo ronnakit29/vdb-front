@@ -196,7 +196,6 @@ export default function PromiseFinal() {
                             </li>
                             <li>
                                 <li className='flex items-center font-semibold text-lg'>
-                                    {/* status */}
                                     <div className="w-44">สถานะ:</div> <span className="underline">{i.status === 1 ? <span className="text-green-500">อยู่ในสัญญา</span> : i.status === 0 ? <span className="text-yellow-500">สัญญาไม่สมบูรณ์</span> : i.status === 2 ? <span className="text-red-500">สัญญาสิ้นสุด</span> : <span className="text-gray-500">ยกเลิกสัญญา</span>}</span>
                                 </li>
                             </li>

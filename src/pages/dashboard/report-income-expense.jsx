@@ -20,6 +20,7 @@ export default function ReportIncomeExpense() {
         income: "",
         expense: "",
         withdraw_value: "",
+        withdraw_all: "",
         citizen_id: "",
         description: ""
     }
@@ -30,13 +31,10 @@ export default function ReportIncomeExpense() {
     const router = useRouter()
     async function checkManagerAndSave(citizen_id) {
         try {
-            const check = await client.checkManager(citizen_id)
-            if (check) {
-                dispatch(createIncomeExpenses({ ...formData, citizen_id }, () => {
-                    init();
-                    resetForm();
-                }))
-            }
+            dispatch(createIncomeExpenses({ ...formData, citizen_id }, () => {
+                init();
+                resetForm();
+            }))
         } catch (error) {
             dispatch(showToast(error, "bg-red-500", 3000))
         }
@@ -102,7 +100,7 @@ export default function ReportIncomeExpense() {
                 <div className="px-8 py-2">
                     <h2 className="text-xl font-semibold">บันทึกรายรับ-รายจ่าย</h2>
                 </div>
-                <div className="px-8 py-2 grid grid-cols-4 gap-4">
+                <div className="px-8 py-2 grid grid-cols-3 gap-4">
                     <div className="w-full">
                         <Input placeholder='กรอกข้อมูล' label="รายรับ" variant='bordered' value={formData.income} onChange={e => setFormData({ ...formData, income: e.target.value })}></Input>
                     </div>
@@ -115,7 +113,10 @@ export default function ReportIncomeExpense() {
                     <div className="w-full">
                         <Input placeholder='กรอกข้อมูล' label="ถอน 70%" variant='bordered' value={formData.withdraw_value} onChange={e => setFormData({ ...formData, withdraw_value: e.target.value })}></Input>
                     </div>
-                    <div className="col-span-3">
+                    <div className="w-full">
+                        <Input placeholder='กรอกข้อมูล' label="ถอนปิดยอด" variant='bordered' value={formData.withdraw_all} onChange={e => setFormData({ ...formData, withdraw_all: e.target.value })}></Input>
+                    </div>
+                    <div className="w-full">
                         <Input placeholder='กรอกข้อมูล' label="หมายเหตุ" variant='bordered' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })}></Input>
                     </div>
                     <div className="flex items-center">

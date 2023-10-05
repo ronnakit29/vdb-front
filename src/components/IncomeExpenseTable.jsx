@@ -42,6 +42,11 @@ export default function IncomeExpenseTable({ data, onReload }) {
       format: ({ value }) => Helper.formatNumber(value)
     },
     {
+      key: "withdraw_all",
+      label: "ถอนปิดยอด",
+      format: ({ value }) => Helper.formatNumber(value)
+    },
+    {
       key: 'description',
       label: 'หมายเหตุ'
     },
