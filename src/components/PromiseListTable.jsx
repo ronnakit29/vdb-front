@@ -88,13 +88,13 @@ export default function PromiseListTable({ data, onReload }) {
             timestamp: moment(i.timestamp).format("DD/MM/YYYY HH:mm:ss"),
             start_date_end: `เริ่ม: ${moment(i.start_date).format("DD/MM/YYYY")} สิ้นสุด: ${moment(i.expired_date).format("DD/MM/YYYY")}`,
             status: i.status === 1 ? "อยู่ในสัญญา" : i.status === 0 ? "สัญญาไม่สมบูรณ์" : i.status === 2 ? "สัญญาสิ้นสุด" : "ยกเลิกสัญญา",
-            citizen_id: i.citizen_id,
+            // citizen_id: i.citizen_id,
             x: `${i.title_name}${i.first_name} ${i.last_name}`,
             type: typeTxt[i.type],
             amount: Helper.formatNumber(i.amount),
-            interest: Helper.formatNumber(i.interest) + "%",
+            // interest: Helper.formatNumber(i.interest) + "%",
             hedge_fund: Helper.formatNumber(i.hedge_fund),
-            xinterest: Helper.formatNumber(i.amount * i.interest / 100),
+            // xinterest: Helper.formatNumber(i.amount * i.interest / 100),
             period: Helper.formatNumber(i.period) + " งวด",
         }
     })
