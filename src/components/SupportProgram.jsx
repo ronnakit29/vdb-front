@@ -9,7 +9,7 @@ export default function SupportProgram() {
   const link = "http://localhost:44121/setToken?village_id=" + village_code + "&token=1234567890&webhook_url=" + process.env.NEXT_PUBLIC_SERVER_URL
   const cdnLink = "https://cdn.discordapp.com/attachments/1115290421292171325/1159377073949909064/dist.rar?ex=6530cd0a&is=651e580a&hm=b90f87710f857b6e354e2de87b059697c56ed6a8781044a76d4f60925fee06e3&"
   return (
-    <div className="fixed bottom-1 z-[999] border border-teal-500 text-teal-600 py-1 shadow-lg right-0 px-3 bg-white rounded-full flex gap-2 items-center">
+    <div className="fixed bottom-1 z-[999] border border-teal-500 text-teal-600 py-1 shadow-lg left-1 px-3 bg-white rounded-full flex gap-2 items-center">
 
       <div>
         <a href={cdnLink} className="underline" >โปรแกรมอ่านบัตร</a>
