@@ -79,6 +79,7 @@ export default function Index() {
             handleOpenInsertCardDialog(router.query.type)
         }
     }, [router.query.type, router.query])
+    
     return (<div>
         <ReadCardDialog isOpen={isInsertCardDialogOpen} onClose={() => setIsInsertCardDialogOpen(false)} callback={(data) => checkDataAndNextStep(data)} />
         <div className=" py-8 bg-gray-100">

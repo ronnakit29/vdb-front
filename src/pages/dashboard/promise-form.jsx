@@ -86,6 +86,8 @@ export default function PromiseForm() {
         witness1_citizen_id: '',
         witness2_citizen_id: '',
         witness3_citizen_id: '',
+        guaranteeType: 'guarantor',
+        guaranteeValue: '',
     });
 
     const handleChange = (e) => {
@@ -275,6 +277,23 @@ export default function PromiseForm() {
         })
     }, [formData.deposit_amount, formData.multiple_deposit])
     const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL
+    const guaranteeType = [
+        {
+            name: "ผู้ค้ำประกัน",
+            value: "guarantor",
+            accept: ['long', 'short', 'business']
+        },
+        {
+            name: "หลักทรัพย์",
+            value: "collateral",
+            accept: ['business']
+        },
+        {
+            name: "เงินฝาก",
+            value: "deposit",
+            accept: ['business']
+        }
+    ]
     return (
         insertSlot?.member ? <div className='p-8'>
             <div className='mb-5'>
@@ -344,6 +363,12 @@ export default function PromiseForm() {
                     </div>
                 </div>
             </SectionForm>
+            <SectionForm title={"ประเภทการค้ำประกัน"} isRequireTitle={true}>
+                <div className="flex gap-4">
+                    
+                </div>
+            </SectionForm>
+
             <SectionForm title={"ข้อมูลผู้ค้ำประกัน"} isRequireTitle={true}>
                 <div className="grid grid-cols-3 gap-4">
                     <UserSlotComponent onClick={() => handleInsertCard('guarantorFirst')}
