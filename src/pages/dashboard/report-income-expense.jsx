@@ -114,7 +114,7 @@ export default function ReportIncomeExpense() {
                         <Input placeholder='กรอกข้อมูล' label="ถอน 70%" variant='bordered' value={formData.withdraw_value} onChange={e => setFormData({ ...formData, withdraw_value: e.target.value })}></Input>
                     </div>
                     <div className="w-full">
-                        <Input placeholder='กรอกข้อมูล' label="ถอนปิดยอด" variant='bordered' value={formData.withdraw_all} onChange={e => setFormData({ ...formData, withdraw_all: e.target.value })}></Input>
+                        <Input placeholder='กรอกข้อมูล' label="ถอนปิดบัญชี" variant='bordered' value={formData.withdraw_all} onChange={e => setFormData({ ...formData, withdraw_all: e.target.value })}></Input>
                     </div>
                     <div className="w-full">
                         <Input placeholder='กรอกข้อมูล' label="หมายเหตุ" variant='bordered' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })}></Input>
