@@ -28,7 +28,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 	}
 	const coordinates = {
 		// citizen_id: { x: 100, y: 500 },
-		id: { x: 110, y: 74 },
+		running_number: { x: 110, y: 74 },
 		promise_year: { x: 136, y: 74 },
 		// datetime: { x: 100, y: 440 },
 		datetime_day: { x: 395, y: 100 },
