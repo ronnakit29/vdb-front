@@ -115,12 +115,12 @@ const readTemplatePDF = async (data = [], file_name) => {
 			loaner_name: `${value.title_name}${value.first_name} ${value.last_name}`,
 			employee_name: `${value.employee?.title_name}${value.employee?.first_name} ${value.employee?.last_name}`,
 			manager_name: `${value.manager?.title_name}${value.manager?.first_name} ${value.manager?.last_name}`,
-			witness1_name: `${value.witness1?.title_name}${value.witness1?.first_name} ${value.witness1?.last_name}`,
-			witness2_name: `${value.witness2?.title_name}${value.witness2?.first_name} ${value.witness2?.last_name}`,
+			witness1_name: value.witness1 ? `${value.witness1?.title_name}${value.witness1?.first_name} ${value.witness1?.last_name}` : "-",
+			witness2_name: value.witness2 ? `${value.witness2?.title_name}${value.witness2?.first_name} ${value.witness2?.last_name}` : "-",
 			loaner2_name: `${value?.title_name}${value?.first_name} ${value?.last_name}`,
 			village2_name: value?.village?.name || '',
-			witness1_license: `${value.witness1?.title_name}${value.witness1?.first_name} ${value.witness1?.last_name}`,
-			witness2_license: `${value.witness2?.title_name}${value.witness2?.first_name} ${value.witness2?.last_name}`,
+			witness1_license: value.witness1 ? `${value.witness1?.title_name}${value.witness1?.first_name} ${value.witness1?.last_name}` : "-",
+			witness2_license: value.witness2 ? `${value.witness2?.title_name}${value.witness2?.first_name} ${value.witness2?.last_name}` : "-",
 			limit_hedgefund_protech: Helper.formatNumber(value.hedge_fund * 100),
 			...address
 		}
