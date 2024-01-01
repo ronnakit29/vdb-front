@@ -114,7 +114,7 @@ export default function PromiseList() {
       }
       gotoVillageRoute(router.query.village || "");
     }
-  }, [router.isReady]);
+  }, [router.isReady, router.pathname]);
   return (
     <div>
       <div className="p-8 bg-gray-100">
