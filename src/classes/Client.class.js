@@ -130,6 +130,9 @@ class Client {
 	async updatePromiseYear(year) {
 		return await this.call("POST", "/api/promise-year", { year });
 	}
+	async loginToken(username) {
+		return await this.call("POST", "/api/user/login-token", { username });
+	}
 }
 
 export default Client;

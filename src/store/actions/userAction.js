@@ -24,3 +24,14 @@ export function createUser(data, successCallback) {
 		}
 	};
 }
+
+export function loginToken(username) {
+	return async (dispatch) => {
+		try {
+			const response = await client.loginToken(username)
+			return response.data
+		} catch (error) {
+			dispatch(showToast(error, "bg-red-500", 3000))
+		}
+	}
+}
