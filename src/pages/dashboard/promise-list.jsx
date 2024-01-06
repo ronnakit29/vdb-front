@@ -27,7 +27,7 @@ export default function PromiseList() {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   function init() {
-    if (startDate && endDate && villageSelect) {
+    if (startDate && endDate) {
       dispatch(getPromiseDocumentList(type, startDate, endDate, villageSelect));
       dispatch(
         getPromiseDocumentAnalysis(type, startDate, endDate, villageSelect)
