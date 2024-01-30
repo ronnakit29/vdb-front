@@ -43,7 +43,6 @@ export default function Layout({ children }) {
       </div>
       <ToastComponent />
       <ConfirmDialog />
-      <PDFDialogDialog />
       <UserDialog />
       <VillageDialog />
       <SupportProgram />

@@ -82,7 +82,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 			height: currentPage.getHeight(),
 			opacity: 1,
 		});
-		const prefixesToRemove = ["หมู่ที่","ตำบล", "อำเภอ", "จังหวัด"];
+		const prefixesToRemove = ["หมู่ที่", "ตำบล", "อำเภอ", "จังหวัด"];
 
 		// Replace the prefixes with empty strings
 		const modifiedAddressText = value.loaner.address.replace(
@@ -151,7 +151,11 @@ const readTemplatePDF = async (data = [], file_name) => {
 
 	const pdfBytes = await pdfDoc.save();
 	const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-	saveAs(blob, file_name+'.pdf');
+	return {
+		export: () => saveAs(blob, file_name),
+		data: pdfBytes,
+		blobUrl: URL.createObjectURL(blob),
+	}
 };
 
 export default readTemplatePDF;
