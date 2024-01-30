@@ -32,6 +32,7 @@
     "react-redux": "^8.1.2",
     "react-spinners": "^0.13.8",
     "tailwindcss": "3.3.3",
-    "thai-baht-text": "^1.0.8"
+    "thai-baht-text": "^1.0.8",
+    "xlsx": "^0.18.5"
   }
 }

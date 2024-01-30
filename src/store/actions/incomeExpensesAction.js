@@ -1,5 +1,5 @@
 import { client } from "@/classes";
-import { setIncomeExpensesList } from "../slices/incomeExpensesSlice";
+import { setIncomeExpenses, setIncomeExpensesList } from "../slices/incomeExpensesSlice";
 import { showToast } from "./toastAction";
 
 export function getIncomeExpenseList(vid, startDate, endDate) {
@@ -12,6 +12,18 @@ export function getIncomeExpenseList(vid, startDate, endDate) {
 		}
 	};
 }
+
+export function getIncomeExpenseById(id) {
+	return async (dispatch) => {
+		try {
+			const response = await client.getIncomeExpenseById(id)
+			dispatch(setIncomeExpenses(response.data))
+		} catch (error) {
+			dispatch(showToast(error, "bg-red-500", 3000))
+		}
+	};
+}
+
 export function createIncomeExpenses(data, successCallback) {
 	return async (dispatch) => {
 		try {
@@ -21,7 +33,7 @@ export function createIncomeExpenses(data, successCallback) {
 				dispatch(showToast("บันทึกข้อมูลสำเร็จ", "bg-green-500", 3000))
 			}
 		} catch (error) {
-			dispatch(showToast(error, "bg-red-500", 3000))
+			dispatch(showToast(error, "bg-red-500", 7000))
 		}
 	};
 }

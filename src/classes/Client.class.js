@@ -133,6 +133,9 @@ class Client {
 	async loginToken(username) {
 		return await this.call("POST", "/api/user/login-token", { username });
 	}
+	async getIncomeExpenseById(id) {
+		return await this.call("GET", "/api/income-expenses/" + id);
+	}
 }
 
 export default Client;

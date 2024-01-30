@@ -51,7 +51,7 @@ const routes = [
 		children: [
 			{
 				title: "รายรับรายจ่าย",
-				path: "/dashboard/report-income-expense",
+				path: "/dashboard/income-expense",
 				key: "report-income-expense"
 			},
 			{

@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import React, { useEffect } from 'react'
-import { StatCard } from '.'
-import { FaArrowUp, FaChartArea } from 'react-icons/fa'
+import { StatCard } from '..'
+import { FaArrowUp, FaChartArea, FaPlus } from 'react-icons/fa'
 import Helper from '@/classes/Helper.class'
 import IncomeExpenseTable from '@/components/IncomeExpenseTable'
 import { Button, Divider, Input } from '@nextui-org/react'
@@ -15,7 +15,7 @@ import { showConfirm } from '@/store/actions/confirmAction'
 import { getVillageList } from '@/store/actions/villageAction'
 import moment from 'moment'
 
-export default function ReportIncomeExpense() {
+export default function Index() {
     const initFormData = {
         income: "",
         expense: "",
@@ -96,9 +96,10 @@ export default function ReportIncomeExpense() {
                     {villageList.map((i, key) => <option key={key} value={i.id}>{i.code} | {i.name}</option>)}
                 </select>
             </div>
-            <div className=' py-4'>
-                <div className="px-8 py-2">
+            {/* <div className=' py-4'>
+                <div className="px-8 py-2 flex justify-between gap-4 items-center">
                     <h2 className="text-xl font-semibold">บันทึกรายรับ-รายจ่าย</h2>
+                    <Button color='success' className='text-white gap-2 items-center' onClick={()=> router.push("/dashboard/income-expense/create")}><FaPlus/>สร้างรายการใหม่</Button>
                 </div>
                 <div className="px-8 py-2 grid grid-cols-3 gap-4">
                     <div className="w-full">
@@ -124,7 +125,7 @@ export default function ReportIncomeExpense() {
                         >บันทึกรายการ/ผู้จัดการเสียบบัตร</Button>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <Divider />
             <div className='px-8 py-4 flex gap-4 items-center bg-gray-100'>
                 <Input variant='bordered' type='date' className='w-full bg-white rounded-xl' label="วันที่เริ่มต้น" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
@@ -142,7 +143,7 @@ export default function ReportIncomeExpense() {
     )
 }
 
-ReportIncomeExpense.getLayout = function getLayout(page) {
+Index.getLayout = function getLayout(page) {
     return (
         <Layout>
             {page}

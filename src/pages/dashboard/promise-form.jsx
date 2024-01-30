@@ -148,6 +148,7 @@ export default function PromiseForm() {
             setPromiseList([
                 {
                     type: router.query.type,
+                    addon: false,
                     value: formData.amount,
                     hedge_fund: 0,
                     interest: ''
@@ -158,11 +159,13 @@ export default function PromiseForm() {
                 setPromiseList([
                     {
                         type: router.query.type,
+                        addon: false,
                         value: loanValue(),
                         hedge_fund: loanValue() * maximumLoanType.find(i => i.type === router.query.type).hedgeFundPercent
                     },
                     {
-                        type: 'business',
+                        type: router.query.type,
+                        addon: true,
                         value: formData.amount - loanValue(),
                         hedge_fund: 0,
                         interest: ''
@@ -172,6 +175,7 @@ export default function PromiseForm() {
                 setPromiseList([
                     {
                         type: router.query.type,
+                        addon: false,
                         value: formData.amount,
                         hedge_fund: formData.amount * maximumLoanType.find(i => i.type === router.query.type)?.hedgeFundPercent || 0,
                         interest: ''
@@ -264,8 +268,8 @@ export default function PromiseForm() {
     const age = insertSlot.member && dayjs().diff(dayjs(insertSlot.member?.birth_date), 'year')
 
     function savePromiseDocument() {
-        const checkInterestForm = promiseList.find(i => i.interest || i.interest === 0)
-        if (!formData.deposit_amount || !formData.multiple_deposit || !formData.amount || !formData.period || !checkInterestForm) {
+        const checkInterestForm = promiseList.find(i => i.interest === '')
+        if (!formData.deposit_amount || !formData.multiple_deposit || !formData.amount || !formData.period || checkInterestForm) {
             dispatch(showToast('กรุณากรอกข้อมูลให้ครบถ้วน', 'bg-red-500', 3000))
             return;
         }
@@ -397,7 +401,7 @@ export default function PromiseForm() {
             </SectionForm>}
             <SectionForm title={"สรุปข้อมูลการกู้เงิน"} isRequireTitle={true}>
                 <div className="grid grid-cols-2 gap-4">
-                    {promiseList.map((i, key) => <ReportCardComponent index={key + 1} total={promiseList.length} key={key} typeTxt={typeTxt[i.type]} value={i.value} hedge_fund={i.hedge_fund}
+                    {promiseList.map((i, key) => <ReportCardComponent index={key + 1} total={promiseList.length} key={key} typeTxt={typeTxt[i.type] + (i.addon && 'พิเศษ')} value={i.value} hedge_fund={i.hedge_fund}
                         onChange={(e) => {
                             const { value } = e.target;
                             setPromiseList(promiseList.map((item, index) => {

@@ -1,0 +1,314 @@
+[
+    {
+        "financial_status": "ยอดยกมา ",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "นำเงินฝากธนาคาร",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับดอกธนาคาร",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "ถอนเงินธนาคาร",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "สถานะทางการเงิน ณ วันทำการ",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับค่าธรรมเนียมแรกเข้า...",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับหุ้นแรกเข้า(รข.)..",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับหุ้นรายเดือน(รด)...",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับสวัสดิการ...",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับชำระเงินต้น",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                              ระยะสั้น        ..",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                              ระยะยาว      ",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                              กู้ธุรกิจ/ฉุกเฉิน",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                              ปาท่องโก๋",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                              อื่น ๆ.......",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับชำระดอกเบี้ย",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                             ระยะสั้น       ",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                             ระยะยาว    ",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                            กู้ธุรกิจ/ฉุกเฉิน",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                            ปาท่องโก่",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "                            อื่น ๆ.....",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับปันผล  ธ.กลาง",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับปันผล ก.ประกันความเสี่ยง",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "ค่าใบสัญญาเงินกู้",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับค่าสมุดเครดิต.",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับค่าปรับ..",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "กู้เงินจาก   ธ.กลาง",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "กู้เงินจาก  ธนาคารเครือข่าย.....................................",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "กู้เงินจาก  แหล่งอื่น.  :",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับรายได้อื่น ๆ ;",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับหุ้นกู้ยืม",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    },
+    {
+        "financial_status": "รับเงินประกันความเสียง    1  %",
+        "date": "",
+        "no": "",
+        "bank": "",
+        "cash": "",
+        "memo": ""
+    }
+]
