@@ -264,7 +264,8 @@ export default function PromiseForm() {
     const age = insertSlot.member && dayjs().diff(dayjs(insertSlot.member?.birth_date), 'year')
 
     function savePromiseDocument() {
-        if (!formData.deposit_amount || !formData.multiple_deposit || !formData.amount || !formData.period) {
+        const checkInterestForm = promiseList.find(i => i.interest || i.interest === 0)
+        if (!formData.deposit_amount || !formData.multiple_deposit || !formData.amount || !formData.period || !checkInterestForm) {
             dispatch(showToast('กรุณากรอกข้อมูลให้ครบถ้วน', 'bg-red-500', 3000))
             return;
         }

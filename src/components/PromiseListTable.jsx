@@ -4,6 +4,7 @@ import Helper from "@/classes/Helper.class";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import moment from "moment";
+import { checkOld } from "@/helper/helper";
 
 export default function PromiseListTable({ data, onReload }) {
   const typeTxt = {
@@ -12,6 +13,7 @@ export default function PromiseListTable({ data, onReload }) {
     business: "ฉุกเฉิน/ธุรกิจ",
   };
   const router = useRouter();
+  
   const headers = [
     {
       key: "timestamp",
@@ -77,7 +79,7 @@ export default function PromiseListTable({ data, onReload }) {
       label: "ชื่อผู้กู้",
       format: ({ value, item }) => (
         <div className="flex flex-col">
-          <div>{item.title_name + item.first_name + " " + item.last_name}</div>
+          <div>{item.title_name + item.first_name + " " + item.last_name} {`(${checkOld(moment(item.loaner?.birth_date))} ปี)`}</div>
         </div>
       ),
     },

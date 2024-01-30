@@ -14,6 +14,8 @@ import { showToast } from '@/store/actions/toastAction'
 import readTemplatePDF from '../../../plugins/export-pdf'
 import ReadCardDialog from '@/components/ReadCardDialog'
 import { client } from '@/classes'
+import { checkOld } from '@/helper/helper'
+import moment from 'moment'
 
 export default function PromiseFinal() {
     const router = useRouter()
@@ -149,19 +151,19 @@ export default function PromiseFinal() {
                 <div className='bg-green-50 p-4 rounded-3xl mb-4'>
                     <ul className='flex flex-col gap-2'>
                         <li className='flex items-center'>
-                            <div className="w-44">ผู้กู้:</div> {memberDocs[0].citizen_id} | {memberDocs[0]?.loaner?.first_name} {memberDocs[0]?.loaner?.last_name}
+                            <div className="w-44">ผู้กู้:</div> {memberDocs[0].citizen_id} - {memberDocs[0]?.loaner?.first_name} {memberDocs[0]?.loaner?.last_name} {`(${checkOld(moment(memberDocs[0]?.loaner?.birth_date))} ปี)`} - ที่อยู่ {memberDocs[0]?.loaner?.address}
                         </li>
                         <li className='flex items-center'>
-                            <div className="w-44">ผู้ค้ำประกัน 1:</div> {memberDocs[0].witness1_citizen_id || "ยังไม่ได้ระบุข้อมูล"} | {memberDocs[0]?.witness1?.first_name} {memberDocs[0]?.witness1?.last_name}
+                            <div className="w-44">ผู้ค้ำประกัน 1:</div> {memberDocs[0].witness1_citizen_id || "ยังไม่ได้ระบุข้อมูล"} - {memberDocs[0]?.witness1?.first_name} {memberDocs[0]?.witness1?.last_name} {`(${checkOld(moment(memberDocs[0]?.witness1?.birth_date))} ปี)`} - ที่อยู่ {memberDocs[0]?.witness1?.address} 
                         </li>
                         <li className='flex items-center'>
-                            <div className="w-44">ผู้ค้ำประกัน 2:</div> {memberDocs[0].witness2_citizen_id || "ยังไม่ได้ระบุข้อมูล"} | {memberDocs[0]?.witness2?.first_name} {memberDocs[0]?.witness2?.last_name}
+                            <div className="w-44">ผู้ค้ำประกัน 2:</div> {memberDocs[0].witness2_citizen_id || "ยังไม่ได้ระบุข้อมูล"} - {memberDocs[0]?.witness2?.first_name} {memberDocs[0]?.witness2?.last_name} {`(${checkOld(moment(memberDocs[0]?.witness2?.birth_date))} ปี)`} - ที่อยู่ {memberDocs[0]?.witness2?.address}
                         </li>
                         <li className='flex items-center'>
-                            <div className="w-44">ผู้จัดการ:</div> {memberDocs[0].manager_citizen_id || "ยังไม่ได้ระบุข้อมูล"} | {memberDocs[0]?.manager?.first_name} {memberDocs[0]?.manager?.last_name}
+                            <div className="w-44">ผู้จัดการ:</div> {memberDocs[0].manager_citizen_id || "ยังไม่ได้ระบุข้อมูล"} - {memberDocs[0]?.manager?.first_name} {memberDocs[0]?.manager?.last_name}
                         </li>
                         <li className='flex items-center'>
-                            <div className="w-44">พนักงาน:</div> {memberDocs[0].employee_citizen_id || "ยังไม่ได้ระบุข้อมูล"} | {memberDocs[0]?.employee?.first_name} {memberDocs[0]?.employee?.last_name}
+                            <div className="w-44">พนักงาน:</div> {memberDocs[0].employee_citizen_id || "ยังไม่ได้ระบุข้อมูล"} - {memberDocs[0]?.employee?.first_name} {memberDocs[0]?.employee?.last_name}
                         </li>
                     </ul>
                 </div>

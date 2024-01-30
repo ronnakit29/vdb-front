@@ -96,11 +96,6 @@ export default function PromiseList() {
   ];
   const villageList = useSelector((state) => state.village.villageList);
   const [villageSelect, setVillageSelect] = React.useState("");
-  //   useEffect(() => {
-  //     if (villageList.length > 0 && !villageSelect) {
-  //       setVillageSelect(villageList[0].id);
-  //     }
-  //   }, [villageList]);
   useEffect(() => {
     init();
   }, [villageSelect]);
@@ -115,6 +110,9 @@ export default function PromiseList() {
       gotoVillageRoute(router.query.village || "");
     }
   }, [router.isReady, router.pathname]);
+
+  
+
   return (
     <div>
       <div className="p-8 bg-gray-100">
