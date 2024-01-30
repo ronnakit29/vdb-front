@@ -6,3 +6,4 @@ export function checkOld(birthday) {
     const diff = now.diff(birth, "years");
     return diff
 }
+//
