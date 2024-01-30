@@ -96,11 +96,11 @@ export default function Index() {
                     {villageList.map((i, key) => <option key={key} value={i.id}>{i.code} | {i.name}</option>)}
                 </select>
             </div>
+            <div className="px-8 py-2 flex justify-between gap-4 items-center">
+                <h2 className="text-xl font-semibold">บันทึกรายรับ-รายจ่าย</h2>
+                <Button color='success' className='text-white gap-2 items-center' onClick={()=> router.push("/dashboard/income-expense/create")}><FaPlus/>สร้างรายการใหม่</Button>
+            </div>
             {/* <div className=' py-4'>
-                <div className="px-8 py-2 flex justify-between gap-4 items-center">
-                    <h2 className="text-xl font-semibold">บันทึกรายรับ-รายจ่าย</h2>
-                    <Button color='success' className='text-white gap-2 items-center' onClick={()=> router.push("/dashboard/income-expense/create")}><FaPlus/>สร้างรายการใหม่</Button>
-                </div>
                 <div className="px-8 py-2 grid grid-cols-3 gap-4">
                     <div className="w-full">
                         <Input placeholder='กรอกข้อมูล' label="รายรับ" variant='bordered' value={formData.income} onChange={e => setFormData({ ...formData, income: e.target.value })}></Input>
