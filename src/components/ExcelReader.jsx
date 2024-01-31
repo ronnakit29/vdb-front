@@ -10,6 +10,7 @@ import { showConfirm } from "@/store/actions/confirmAction";
 import ReadCardDialog from "./ReadCardDialog";
 import { createIncomeExpenses, getIncomeExpenseById } from "@/store/actions/incomeExpensesAction";
 import { useRouter } from "next/router";
+import { setIncomeExpenses } from "@/store/slices/incomeExpensesSlice";
 function ExcelReader() {
   const [incomeList, setIncomeList] = useState([]);
   const [expensesList, setExpensesList] = useState([]);
@@ -24,7 +25,11 @@ function ExcelReader() {
   const dispatch = useDispatch();
   const incomeExpenses = useSelector((state) => state.incomeExpenses.incomeExpenses);
   async function init() {
-    if (id) dispatch(getIncomeExpenseById(id));
+    if (id) {
+      dispatch(getIncomeExpenseById(id));
+    } else {
+      dispatch(setIncomeExpenses(null));
+    }
   }
   useEffect(() => {
     if (router.isReady) {
