@@ -18,6 +18,7 @@
         "allow_no": "",
         "allow_bank": 1,
         "allow_cash": 1,
+        "nagative": 1,
         "item_financial_status": "นำเงินฝากธนาคาร",
         "date": "",
         "no": "",

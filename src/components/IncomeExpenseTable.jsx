@@ -3,7 +3,7 @@ import TableComponent from "./TableComponent";
 import Helper from "@/classes/Helper.class";
 import { useDispatch } from "react-redux";
 import { showConfirm } from "@/store/actions/confirmAction";
-import { deleteIncomeExpenses } from "@/store/actions/incomeExpensesAction";
+import { deleteIncomeExpenses, handleCancelIncomeExpense } from "@/store/actions/incomeExpensesAction";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/router";
 
@@ -50,6 +50,7 @@ export default function IncomeExpenseTable({ data, onReload }) {
       label: "คงเหลือ",
       format: ({ value, item }) => Helper.formatNumber(item.income - item.expense),
     },
+
     {
       key: "description",
       label: "หมายเหตุ",
@@ -63,11 +64,32 @@ export default function IncomeExpenseTable({ data, onReload }) {
       key: "manager_name",
       label: "ผู้จัดการ",
     },
-    // {
-    //   key: 'delete',
-    //   label: '',
-    //   format: ({ item }) => <Button size='sm' color='danger' variant='flat' onClick={() => handleDeleteIncomeExpenses(item.id)}>ลบ</Button>
-    // }
+    {
+      key: "status",
+      label: "สถานะ",
+      format: ({ value }) => (value === "success" ? <span className="text-green-500">เสร็จสมบูรณ์</span> : value === "cancel" ? <span className="text-red-500">ยกเลิก</span> : <span className="text-yellow-500">รอดำเนินการ</span>),
+    },
+    {
+      key: "action",
+      label: "",
+      format: ({ value, item }) =>
+        item.status === "success" && (
+          <Button size="sm" color="danger" onClick={() => handleCancel(item.id)}>
+            ยกเลิก
+          </Button>
+        ),
+    },
   ];
+  function handleCancel(id) {
+    dispatch(
+      showConfirm("ยืนยันการยกเลิกรายการ", () => {
+        dispatch(
+          handleCancelIncomeExpense(id, () => {
+            onReload && onReload();
+          })
+        );
+      })
+    );
+  }
   return <TableComponent columns={headers} rows={data} onReload={onReload} />;
 }

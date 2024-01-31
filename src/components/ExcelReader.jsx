@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import incomeJson from "../json/income.json";
 import expensesJson from "../json/expenses.json";
 import financialStatusJson from "../json/financial_status.json";
+
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "@/store/actions/toastAction";
@@ -19,40 +20,35 @@ function ExcelReader() {
   const router = useRouter();
   const { id } = router.query;
 
-  useEffect(() => {
-    if (!id) setIncomeList(incomeJson);
-  }, [incomeJson, id]);
-  useEffect(() => {
-    if (!id) setExpensesList(expensesJson);
-  }, [expensesJson, id]);
-  useEffect(() => {
-    if (!id) setFinancialStatusList(financialStatusJson);
-  }, [financialStatusJson, id]);
-
   const dispatch = useDispatch();
   const incomeExpenses = useSelector((state) => state.incomeExpenses.incomeExpenses);
-  async function init() {
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (incomeExpenses) {
+        const income = JSON.parse(incomeExpenses.income_form || "[]");
+        const expense = JSON.parse(incomeExpenses.expense_form || "[]");
+        const financialStatus = JSON.parse(incomeExpenses.financial_status_form || "[]");
+        setIncomeList(income);
+        setExpensesList(expense);
+        setFinancialStatusList(financialStatus);
+        setDescription(incomeExpenses.description);
+      } else {
+        setIncomeList([...incomeJson]);
+        setExpensesList([...expensesJson]);
+        setFinancialStatusList([...financialStatusJson]);
+        setDescription("");
+      }
+    }
+  }, [incomeExpenses]);
+
+  useEffect(() => {
     if (id) {
       dispatch(getIncomeExpenseById(id));
     } else {
       dispatch(setIncomeExpenses(null));
     }
-  }
-  useEffect(() => {
-    if (router.isReady) {
-      init();
-    }
-  }, [router.isReady]);
-
-  useEffect(() => {
-    if (incomeExpenses) {
-      const income = JSON.parse(incomeExpenses.income_form || "[]");
-      const expense = JSON.parse(incomeExpenses.expense_form || "[]");
-      setIncomeList(income);
-      setExpensesList(expense);
-      setDescription(incomeExpenses.description);
-    }
-  }, [incomeExpenses]);
+  }, [id]);
 
   const [readCardManagerIsOpen, setReadCardManagerIsOpen] = React.useState(false);
   const [description, setDescription] = useState("");
@@ -67,8 +63,8 @@ function ExcelReader() {
       })
     );
   }
-  const sumAllBank = incomeList.reduce((acc, cur) => {
-    return acc + Number(cur.bank);
+  const sumAllBankStatus = financialStatusList.reduce((acc, cur) => {
+    return acc + (cur.nagative == 1 ? Number(-cur.cash) : Number(cur.cash));
   }, 0);
   const sumAllCashExpenses = expensesList.reduce((acc, cur) => {
     return acc + Number(cur.cash);
@@ -79,7 +75,7 @@ function ExcelReader() {
   async function checkManagerAndSave(citizen_id) {
     try {
       dispatch(
-        createIncomeExpenses({ income_form: JSON.stringify(incomeList), expense_form: JSON.stringify(expensesList), expense: sumAllCashExpenses, income: sumAllBank + sumAllCash, description, citizen_id }, () => {
+        createIncomeExpenses({ income_form: JSON.stringify(incomeList), expense_form: JSON.stringify(expensesList), financial_status_form: JSON.stringify(financialStatusList), expense: sumAllCashExpenses, income: sumAllBankStatus + sumAllCash, description, citizen_id }, () => {
           router.push("/dashboard/income-expense");
         })
       );
@@ -92,14 +88,14 @@ function ExcelReader() {
   };
 
   const formHeaders = [
-    { key: "item_financial_status", label: "สถานะทางการเงิน" },
+    { key: "item_financial_status", label: "รายรับ" },
     { key: "no", label: "ราย" },
-    { key: "cash", label: "เงินสด" },
+    { key: "cash", label: "จำนวนเงิน" },
     // { key: "memo", label: "หมายเหตุ" },
   ];
 
   const formExpenseHeaders = [
-    { key: "item", label: "รายการ" },
+    { key: "item", label: "รายจ่าย" },
     { key: "no", label: "ราย" },
     { key: "cash", label: "จำนวนเงิน" },
     // { key: "memo", label: "หมายเหตุ" },
@@ -108,7 +104,7 @@ function ExcelReader() {
   const formFinancialStatusHeaders = [
     { key: "item_financial_status", label: "รายการ" },
     { key: "date", label: "วันที่" },
-    { key: "bank", label: "ธนาคาร" },
+    { key: "cash", label: "จำนวนเงิน" },
     // { key: "memo", label: "หมายเหตุ" },
   ];
 
@@ -177,12 +173,12 @@ function ExcelReader() {
                 {formFinancialStatusHeaders.map((i, idx) => (
                   <td key={idx} className="py-1 whitespace-nowrap hover:bg-gray-100 px-4">
                     {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
-                    {item.allow_date == 1 && i.key === "date" ? <Input type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_no == 1 && i.key === "no" ? <Input type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_cash == 1 && i.key === "cash" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_bank == 1 && i.key === "bank" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_item == 1 && i.key === "item_financial_status" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {i.key === "memo" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_date == 1 && i.key === "date" ? <Input readOnly={id ? true : false} type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_no == 1 && i.key === "no" ? <Input readOnly={id ? true : false} type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_cash == 1 && i.key === "cash" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_bank == 1 && i.key === "bank" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_item == 1 && i.key === "item_financial_status" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    {i.key === "memo" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
                   </td>
                 ))}
               </tr>
@@ -209,12 +205,12 @@ function ExcelReader() {
                 {formHeaders.map((i, idx) => (
                   <td key={idx} className="py-1 whitespace-nowrap hover:bg-gray-100 px-4">
                     {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
-                    {item.allow_date == 1 && i.key === "date" ? <Input type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_no == 1 && i.key === "no" ? <Input type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_cash == 1 && i.key === "cash" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_bank == 1 && i.key === "bank" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_item == 1 && i.key === "item_financial_status" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
-                    {i.key === "memo" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_date == 1 && i.key === "date" ? <Input readOnly={id ? true : false} type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_no == 1 && i.key === "no" ? <Input readOnly={id ? true : false} type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_cash == 1 && i.key === "cash" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_bank == 1 && i.key === "bank" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_item == 1 && i.key === "item_financial_status" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {i.key === "memo" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
                   </td>
                 ))}
               </tr>
@@ -241,12 +237,12 @@ function ExcelReader() {
                 {formExpenseHeaders.map((i, idx) => (
                   <td key={idx} className="py-1 whitespace-nowrap hover:bg-gray-100 px-4">
                     {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
-                    {item.allow_date == 1 && i.key === "date" ? <Input type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_no == 1 && i.key === "no" ? <Input type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_cash == 1 && i.key === "cash" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_bank == 1 && i.key === "bank" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_item == 1 && i.key === "item" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
-                    {i.key === "memo" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_date == 1 && i.key === "date" ? <Input readOnly={id ? true : false} type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_no == 1 && i.key === "no" ? <Input readOnly={id ? true : false} type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_cash == 1 && i.key === "cash" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_bank == 1 && i.key === "bank" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_item == 1 && i.key === "item" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {i.key === "memo" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
                   </td>
                 ))}
               </tr>
@@ -255,14 +251,17 @@ function ExcelReader() {
         </table>
       )}
       <div className="flex justify-end gap-4 py-5 bg-gray-100 px-4 rounded-lg">
-        <div>
-          ยอดรวมธนาคาร (รายรับ): <span className="text-xl font-bold">{numberFormat(sumAllBank)}</span> บาท
+        <div className="text-orange-600">
+          สถานะธนาคาร: <span className="text-xl font-bold">{numberFormat(sumAllBankStatus)}</span> บาท
         </div>
-        <div>
-          ยอดรวมเงินสด (รายรับ): <span className="text-xl font-bold">{numberFormat(sumAllCash)}</span> บาท
+        <div className="text-green-600">
+          ยอดรวมรายรับ: <span className="text-xl font-bold">{numberFormat(sumAllCash)}</span> บาท
         </div>
         <div className="text-red-600">
-          ยอดรวมเงินสด (รายจ่าย): <span className="text-xl font-bold">{numberFormat(sumAllCashExpenses)}</span> บาท
+          ยอดรวมรายจ่าย: <span className="text-xl font-bold">{numberFormat(sumAllCashExpenses)}</span> บาท
+        </div>
+        <div className="text-blue-600">
+          คงเหลือ: <span className="text-xl font-bold">{numberFormat(Number(sumAllBankStatus) + Number(sumAllCash))}</span> บาท
         </div>
       </div>
       <div className="flex justify-end gap-4 py-4">
@@ -280,7 +279,7 @@ function ExcelReader() {
             </Button>
           </>
         )}
-        {page === 2 && (
+        {page === 2 && !id && (
           <Button color="success" className="text-white" onClick={() => handleConfirmSaveData()}>
             บันทึกรายการ
           </Button>

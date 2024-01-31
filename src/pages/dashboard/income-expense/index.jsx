@@ -82,8 +82,8 @@ export default function Index() {
       init();
     }
   }, [router.isReady]);
-  const sumIncome = incomeExpensesList.reduce((a, b) => a + Number(b.income), 0);
-  const sumExpense = incomeExpensesList.reduce((a, b) => a + Number(b.expense), 0);
+  const sumIncome = incomeExpensesList.filter((x) => x.status == "success").reduce((a, b) => a + Number(b.income), 0);
+  const sumExpense = incomeExpensesList.filter((x) => x.status == "success").reduce((a, b) => a + Number(b.expense), 0);
   return (
     <div>
       <div className="p-8 bg-gray-100">
@@ -110,32 +110,6 @@ export default function Index() {
           สร้างรายการใหม่
         </Button>
       </div>
-      {/* <div className=' py-4'>
-                <div className="px-8 py-2 grid grid-cols-3 gap-4">
-                    <div className="w-full">
-                        <Input placeholder='กรอกข้อมูล' label="รายรับ" variant='bordered' value={formData.income} onChange={e => setFormData({ ...formData, income: e.target.value })}></Input>
-                    </div>
-                    <div className="w-full">
-                        <Input placeholder='กรอกข้อมูล' label="รายจ่าย" variant='bordered' value={formData.expense} onChange={e => setFormData({ ...formData, expense: e.target.value })}></Input>
-                    </div>
-                    <div className="w-full flex items-center">
-                        <Input value={Helper.formatNumber(Number(formData.income) - Number(formData.expense))} disabled label="คงเหลือ" variant='bordered'></Input>
-                    </div>
-                    <div className="w-full">
-                        <Input placeholder='กรอกข้อมูล' label="ถอน 70%" variant='bordered' value={formData.withdraw_value} onChange={e => setFormData({ ...formData, withdraw_value: e.target.value })}></Input>
-                    </div>
-                    <div className="w-full">
-                        <Input placeholder='กรอกข้อมูล' label="ถอนปิดบัญชี" variant='bordered' value={formData.withdraw_all} onChange={e => setFormData({ ...formData, withdraw_all: e.target.value })}></Input>
-                    </div>
-                    <div className="w-full">
-                        <Input placeholder='กรอกข้อมูล' label="หมายเหตุ" variant='bordered' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })}></Input>
-                    </div>
-                    <div className="flex items-center">
-                        <Button color="success" size='lg' className='text-white w-full' onClick={() => handleConfirmSaveData()}
-                        >บันทึกรายการ/ผู้จัดการเสียบบัตร</Button>
-                    </div>
-                </div>
-            </div> */}
       <Divider />
       <div className="px-8 py-4 flex gap-4 items-center bg-gray-100">
         <Input variant="bordered" type="date" className="w-full bg-white rounded-xl" label="วันที่เริ่มต้น" value={startDate} onChange={(e) => setStartDate(e.target.value)} />

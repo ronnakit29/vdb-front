@@ -12,6 +12,19 @@ export function getIncomeExpenseList(vid, startDate, endDate) {
 		}
 	};
 }
+export function handleCancelIncomeExpense(id, successCallback) {
+	return async (dispatch) => {
+		try {
+			const response = await client.handleCancelIncomeExpense(id)
+			if (response) {
+				successCallback && successCallback(response)
+				dispatch(showToast("ยกเลิกข้อมูลสำเร็จ", "bg-green-500", 3000))
+			}
+		} catch (error) {
+			dispatch(showToast(error, "bg-red-500", 3000))
+		}
+	};
+}
 
 export function getIncomeExpenseById(id) {
 	return async (dispatch) => {
