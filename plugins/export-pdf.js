@@ -6,7 +6,10 @@ import THBText from 'thai-baht-text';
 const fontkit = require('fontkit');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 const readTemplatePDF = async (data = [], file_name) => {
-	const templatePDFBuffer = await axios.get('/pdf-template/template3.pdf', { responseType: 'arraybuffer' });
+	const fileLocation = {
+		business: "template4.pdf",
+	}
+	const templatePDFBuffer = await axios.get(`/pdf-template/${fileLocation[data[0].type] || 'template3.pdf'}`, { responseType: 'arraybuffer' });
 	const bufferData = templatePDFBuffer.data;
 	const pdfDoc = await PDFDocument.load(bufferData);
 	pdfDoc.registerFontkit(fontkit);
@@ -68,13 +71,27 @@ const readTemplatePDF = async (data = [], file_name) => {
 	data.forEach((value, key) => {
 		pdfDoc.insertPage(key);
 		const currentPage = pdfDoc.getPages()[key]
-		currentPage.drawText(`${typeTxt[value.type]}`, {
-			x: 465,
-			y: currentPage.getHeight() - 34,
-			size: 24,
-			color: rgb(0, 0, 0), // Black color
-			font: embedFont
-		});
+
+		if (value.type !== 'business') {
+			currentPage.drawText(`${typeTxt[value.type]}`, {
+				x: 465,
+				y: currentPage.getHeight() - 34,
+				size: 24,
+				color: rgb(0, 0, 0), // Black color
+				font: embedFont
+			});
+			currentPage.drawText(`${value.addon ? 'พิเศษ' : ''}`, {
+				x: 495,
+				y: currentPage.getHeight() - 34,
+				size: 16,
+				color: rgb(0, 0, 0), // Black color
+				font: embedFont
+			});
+		}
+		let ignoreField = [];
+		if (value.type === 'business') {
+			ignoreField = ['witness1_license', 'witness2_license', 'witness1_name', 'witness2_name', 'village2_name', 'loaner2_name']
+		}
 		currentPage.drawPage(embeddedPage, {
 			x: 0,
 			y: 0,
@@ -126,25 +143,21 @@ const readTemplatePDF = async (data = [], file_name) => {
 		}
 		console.log(value)
 		for (const keyName in value) {
-			if (coordinates[keyName]) {
-				const text = value[keyName];
-				const { x, y } = coordinates[keyName];
-				currentPage.drawText(`${text}`, {
-					x,
-					y: currentPage.getHeight() - y,
-					size: fontSize,
-					color: rgb(0, 0, 0), // Black color
-					font: embedFont
-				});
+			if (!ignoreField.includes(keyName)) {
+				if (coordinates[keyName]) {
+					const text = value[keyName];
+					const { x, y } = coordinates[keyName];
+					currentPage.drawText(`${text}`, {
+						x,
+						y: currentPage.getHeight() - y,
+						size: fontSize,
+						color: rgb(0, 0, 0), // Black color
+						font: embedFont
+					});
+				}
 			}
+
 		}
-		// currentPage.drawText(`${key}`, {
-		// 	x: 50,
-		// 	y: 400,
-		// 	size: fontSize,
-		// 	color: rgb(0, 0, 0),
-		// 	font: embedFont,
-		// });
 	})
 	// remove last page
 	pdfDoc.removePage(pdfDoc.getPageCount() - 1);

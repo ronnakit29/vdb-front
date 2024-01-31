@@ -214,7 +214,7 @@ export default function PromiseFinal() {
                     <div className="w-44">เลขที่:</div> {i.running_number}/{i.promise_year}
                   </li>
                   <li className="flex items-center">
-                    <div className="w-44">ประเภทสัญญา:</div> {typeTxt[i.type]}
+                    <div className="w-44">ประเภทสัญญา:</div> {typeTxt[i.type]}, {i.addon ? 'พิเศษ' : '-'}
                   </li>
                   <li className="flex items-center">
                     <div className="w-44">วันที่ทำสัญญา:</div> {Helper.formatDate(i.timestamp)}

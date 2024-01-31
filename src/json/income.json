@@ -1,6 +1,11 @@
 [
     {
-        "financial_status": "ยอดยกมา ",
+        "is_header": "",
+        "allow_date": 1,
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "ยอดยกมา ",
         "date": "",
         "no": "",
         "bank": "",
@@ -8,7 +13,12 @@
         "memo": ""
     },
     {
-        "financial_status": "นำเงินฝากธนาคาร",
+        "is_header": "",
+        "allow_date": 1,
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "นำเงินฝากธนาคาร",
         "date": "",
         "no": "",
         "bank": "",
@@ -16,7 +26,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับดอกธนาคาร",
+        "is_header": "",
+        "allow_date": 1,
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับดอกธนาคาร",
         "date": "",
         "no": "",
         "bank": "",
@@ -24,7 +39,12 @@
         "memo": ""
     },
     {
-        "financial_status": "ถอนเงินธนาคาร",
+        "is_header": "",
+        "allow_date": 1,
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "ถอนเงินธนาคาร",
         "date": "",
         "no": "",
         "bank": "",
@@ -32,7 +52,12 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "is_header": 1,
+        "allow_date": 1,
+        "allow_no": "",
+        "allow_bank": "",
+        "allow_cash": "",
+        "item_financial_status": "สถานะทางการเงิน ณ วันทำการ",
         "date": "",
         "no": "",
         "bank": "",
@@ -40,7 +65,12 @@
         "memo": ""
     },
     {
-        "financial_status": "สถานะทางการเงิน ณ วันทำการ",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับค่าธรรมเนียมแรกเข้า...",
         "date": "",
         "no": "",
         "bank": "",
@@ -48,7 +78,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับค่าธรรมเนียมแรกเข้า...",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับหุ้นแรกเข้า(รข.)..",
         "date": "",
         "no": "",
         "bank": "",
@@ -56,7 +91,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับหุ้นแรกเข้า(รข.)..",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับหุ้นรายเดือน(รด)...",
         "date": "",
         "no": "",
         "bank": "",
@@ -64,7 +104,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับหุ้นรายเดือน(รด)...",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับสวัสดิการ...",
         "date": "",
         "no": "",
         "bank": "",
@@ -72,7 +117,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับสวัสดิการ...",
+        "is_header": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": "",
+        "allow_cash": "",
+        "item_financial_status": "รับชำระเงินต้น   =",
         "date": "",
         "no": "",
         "bank": "",
@@ -80,7 +130,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับชำระเงินต้น",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                             - ระยะสั้น        ..",
         "date": "",
         "no": "",
         "bank": "",
@@ -88,7 +143,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                              ระยะสั้น        ..",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                             - ระยะยาว      ",
         "date": "",
         "no": "",
         "bank": "",
@@ -96,7 +156,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                              ระยะยาว      ",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                             - กู้ธุรกิจ/ฉุกเฉิน",
         "date": "",
         "no": "",
         "bank": "",
@@ -104,7 +169,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                              กู้ธุรกิจ/ฉุกเฉิน",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                              -ปาท่องโก๋",
         "date": "",
         "no": "",
         "bank": "",
@@ -112,7 +182,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                              ปาท่องโก๋",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                              -อื่น ๆ.......",
         "date": "",
         "no": "",
         "bank": "",
@@ -120,7 +195,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                              อื่น ๆ.......",
+        "is_header": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": "",
+        "allow_cash": "",
+        "item_financial_status": "รับชำระดอกเบี้ย   =",
         "date": "",
         "no": "",
         "bank": "",
@@ -128,7 +208,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับชำระดอกเบี้ย",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                            - ระยะสั้น       ",
         "date": "",
         "no": "",
         "bank": "",
@@ -136,7 +221,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                             ระยะสั้น       ",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                            - ระยะยาว    ",
         "date": "",
         "no": "",
         "bank": "",
@@ -144,7 +234,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                             ระยะยาว    ",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                            -กู้ธุรกิจ/ฉุกเฉิน",
         "date": "",
         "no": "",
         "bank": "",
@@ -152,7 +247,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                            กู้ธุรกิจ/ฉุกเฉิน",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                            -ปาท่องโก่",
         "date": "",
         "no": "",
         "bank": "",
@@ -160,7 +260,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                            ปาท่องโก่",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "                            -อื่น ๆ.....",
         "date": "",
         "no": "",
         "bank": "",
@@ -168,7 +273,12 @@
         "memo": ""
     },
     {
-        "financial_status": "                            อื่น ๆ.....",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับปันผล  ธ.กลาง",
         "date": "",
         "no": "",
         "bank": "",
@@ -176,7 +286,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับปันผล  ธ.กลาง",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับปันผล ก.ประกันความเสี่ยง",
         "date": "",
         "no": "",
         "bank": "",
@@ -184,7 +299,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับปันผล ก.ประกันความเสี่ยง",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "ค่าใบสัญญาเงินกู้",
         "date": "",
         "no": "",
         "bank": "",
@@ -192,7 +312,12 @@
         "memo": ""
     },
     {
-        "financial_status": "ค่าใบสัญญาเงินกู้",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับค่าสมุดเครดิต.",
         "date": "",
         "no": "",
         "bank": "",
@@ -200,7 +325,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับค่าสมุดเครดิต.",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับค่าปรับ..",
         "date": "",
         "no": "",
         "bank": "",
@@ -208,7 +338,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับค่าปรับ..",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "กู้เงินจาก   ธ.กลาง",
         "date": "",
         "no": "",
         "bank": "",
@@ -216,7 +351,12 @@
         "memo": ""
     },
     {
-        "financial_status": "กู้เงินจาก   ธ.กลาง",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "กู้เงินจาก  ธนาคารเครือข่าย.....................................",
         "date": "",
         "no": "",
         "bank": "",
@@ -224,7 +364,12 @@
         "memo": ""
     },
     {
-        "financial_status": "กู้เงินจาก  ธนาคารเครือข่าย.....................................",
+        "is_header": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": "",
+        "allow_cash": "",
+        "item_financial_status": "กู้เงินจาก  แหล่งอื่น.  :-",
         "date": "",
         "no": "",
         "bank": "",
@@ -232,7 +377,13 @@
         "memo": ""
     },
     {
-        "financial_status": "กู้เงินจาก  แหล่งอื่น.  :",
+        "allow_item": 1,
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "",
         "date": "",
         "no": "",
         "bank": "",
@@ -240,7 +391,13 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "allow_item": 1,
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "",
         "date": "",
         "no": "",
         "bank": "",
@@ -248,7 +405,12 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "is_header": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": "",
+        "allow_cash": "",
+        "item_financial_status": "รับรายได้อื่น ๆ ;-",
         "date": "",
         "no": "",
         "bank": "",
@@ -256,7 +418,13 @@
         "memo": ""
     },
     {
-        "financial_status": "รับรายได้อื่น ๆ ;",
+        "allow_item": 1,
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "",
         "date": "",
         "no": "",
         "bank": "",
@@ -264,7 +432,13 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "allow_item": 1,
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "",
         "date": "",
         "no": "",
         "bank": "",
@@ -272,7 +446,13 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "allow_item": 1,
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "",
         "date": "",
         "no": "",
         "bank": "",
@@ -280,7 +460,13 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "allow_item": 1,
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "",
         "date": "",
         "no": "",
         "bank": "",
@@ -288,7 +474,12 @@
         "memo": ""
     },
     {
-        "financial_status": "",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับหุ้นกู้ยืม (กย ............. %)  ",
         "date": "",
         "no": "",
         "bank": "",
@@ -296,15 +487,12 @@
         "memo": ""
     },
     {
-        "financial_status": "รับหุ้นกู้ยืม",
-        "date": "",
-        "no": "",
-        "bank": "",
-        "cash": "",
-        "memo": ""
-    },
-    {
-        "financial_status": "รับเงินประกันความเสียง    1  %",
+        "is_header": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_bank": 1,
+        "allow_cash": 1,
+        "item_financial_status": "รับเงินประกันความเสียง    1  %",
         "date": "",
         "no": "",
         "bank": "",

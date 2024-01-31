@@ -401,7 +401,7 @@ export default function PromiseForm() {
             </SectionForm>}
             <SectionForm title={"สรุปข้อมูลการกู้เงิน"} isRequireTitle={true}>
                 <div className="grid grid-cols-2 gap-4">
-                    {promiseList.map((i, key) => <ReportCardComponent index={key + 1} total={promiseList.length} key={key} typeTxt={typeTxt[i.type] + (i.addon && 'พิเศษ')} value={i.value} hedge_fund={i.hedge_fund}
+                    {promiseList.map((i, key) => <ReportCardComponent index={key + 1} total={promiseList.length} key={key} typeTxt={typeTxt[i.type] + (i.addon ? 'พิเศษ' : '')} value={i.value} hedge_fund={i.hedge_fund}
                         onChange={(e) => {
                             const { value } = e.target;
                             setPromiseList(promiseList.map((item, index) => {

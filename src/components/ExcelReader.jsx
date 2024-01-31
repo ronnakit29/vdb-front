@@ -78,26 +78,23 @@ function ExcelReader() {
   const noInputFromKeys = {
     ยอดยกมา: "ราย",
   };
-  const placeholderFromKeys = [
-    { financial_status: "รับหุ้นกู้ยืม", field: "memo", placeholder: "กรอกข้อมูลเช่น 1%" },
-    { financial_status: "นำเงินฝากธนาคาร", field: "memo", placeholder: "กรอกข้อมูลธนาคารตรงนี้" },
-    { financial_status: "รับดอกธนาคาร", field: "memo", placeholder: "กรอกข้อมูลธนาคารตรงนี้" },
-    { financial_status: "ถอนเงินธนาคาร", field: "memo", placeholder: "กรอกข้อมูลธนาคารตรงนี้" },
-    { financial_status: "", field: "memo", placeholder: "กรอกข้อมูลอื่นๆ หรือ ว่างไว้" },
-    { item: "", field: "memo", placeholder: "กรอกข้อมูลอื่นๆ หรือ ว่างไว้" },
-    { financial_status: "สถานะทางการเงิน ณ วันทำการ", field: "memo", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "สถานะทางการเงิน ณ วันทำการ", field: "bank", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "สถานะทางการเงิน ณ วันทำการ", field: "cash", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "สถานะทางการเงิน ณ วันทำการ", field: "no", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระเงินต้น", field: "memo", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระเงินต้น", field: "bank", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระเงินต้น", field: "cash", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระเงินต้น", field: "no", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระดอกเบี้ย", field: "memo", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระดอกเบี้ย", field: "bank", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระดอกเบี้ย", field: "cash", placeholder: "ไม่ต้องกรอก" },
-    { financial_status: "รับชำระดอกเบี้ย", field: "no", placeholder: "ไม่ต้องกรอก" },
+
+  const formHeaders = [
+    { key: "item_financial_status", label: "สถานะทางการเงิน" },
+    { key: "date", label: "วันที่" },
+    { key: "no", label: "ราย" },
+    { key: "bank", label: "ธนาคาร" },
+    { key: "cash", label: "เงินสด" },
+    { key: "memo", label: "หมายเหตุ" },
   ];
+
+  const formExpenseHeaders = [
+    { key: "item", label: "รายการ" },
+    { key: "no", label: "ราย" },
+    { key: "cash", label: "เงินสด" },
+    { key: "memo", label: "หมายเหตุ" },
+  ];
+
   const typeFromKeys = {
     date: "date",
     bank: "number",
@@ -113,8 +110,21 @@ function ExcelReader() {
     bank: "ธนาคาร",
   };
   const allowDateOnly = [{ financial_status: "ยอดยกมา" }];
-
+  const highlight = ["สถานะทางการเงิน ณ วันทำการ", "รับชำระเงินต้น", "รับชำระดอกเบี้ย"];
+  const isHighlight = (item) => {
+    return highlight.includes(item.financial_status);
+  };
   const [page, setPage] = useState("income");
+  function handleChengeIncomeValue(val, index, key) {
+    const newIncomeList = [...incomeList];
+    newIncomeList[index][key] = val;
+    setIncomeList(newIncomeList);
+  }
+  function handleChengeExpenseValue(val, index, key) {
+    const newExpensesList = [...expensesList];
+    newExpensesList[index][key] = val;
+    setExpensesList(newExpensesList);
+  }
   return (
     <div>
       <div className="mb-4">
@@ -130,9 +140,9 @@ function ExcelReader() {
             <tr>
               {/* Render table headers */}
               {incomeList.length > 0 &&
-                Object.keys(incomeList[0]).map((header) => (
-                  <th key={header} className="py-4">
-                    {titles[header] || header}
+                formHeaders.map((header) => (
+                  <th key={header.key} className="py-4">
+                    {header.label}
                   </th>
                 ))}
             </tr>
@@ -140,29 +150,16 @@ function ExcelReader() {
           <tbody className="bg-white divide-y divide-gray-200">
             {/* Render table rows */}
             {incomeList.map((item, index) => (
-              <tr key={index} className="cursor-pointer">
-                {Object.values(item).map((val, idx) => (
+              <tr key={index} className={`cursor-pointer ${isHighlight(item) ? "bg-gray-100 font-bold" : ""}`}>
+                {formHeaders.map((i, idx) => (
                   <td key={idx} className="px-6 py-1 whitespace-nowrap hover:bg-gray-100">
-                    {Object.keys(item)[idx] !== "financial_status" ? (
-                      <>
-                        <Input
-                          disabled={noInputFromKeys[Object.keys(item)[idx]]}
-                          type={typeFromKeys[Object.keys(item)[idx]] || "text"}
-                          className="text-center"
-                          variant="bordered"
-                          size="sm"
-                          placeholder={placeholderFromKeys.find((i) => Object.keys(item)[idx] === i.field && i.financial_status === item.financial_status)?.placeholder || ""}
-                          value={val === "-" ? "" : val}
-                          onChange={(e) => {
-                            const newIncomeList = [...incomeList];
-                            newIncomeList[index][Object.keys(item)[idx]] = e.target.value;
-                            setIncomeList(newIncomeList);
-                          }}
-                        />
-                      </>
-                    ) : (
-                      val
-                    )}
+                    {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
+                    {item.allow_date == 1 && i.key === "date" ? <Input type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_no == 1 && i.key === "no" ? <Input type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_cash == 1 && i.key === "cash" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_bank == 1 && i.key === "bank" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_item == 1 && i.key === "item_financial_status" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
+                    {i.key === "memo" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeIncomeValue(e.target.value, index, i.key)} /> : ""}
                   </td>
                 ))}
               </tr>
@@ -175,9 +172,9 @@ function ExcelReader() {
             <tr>
               {/* Render table headers */}
               {expensesList.length > 0 &&
-                Object.keys(expensesList[0]).map((header) => (
-                  <th key={header} className="py-4">
-                    {titles[header] || header}
+                formExpenseHeaders.map((header) => (
+                  <th key={header.key} className="py-4">
+                    {header.label}
                   </th>
                 ))}
             </tr>
@@ -185,29 +182,16 @@ function ExcelReader() {
           <tbody className="bg-white divide-y divide-gray-200">
             {/* Render table rows */}
             {expensesList.map((item, index) => (
-              <tr key={index} className="cursor-pointer">
-                {Object.values(item).map((val, idx) => (
+              <tr key={index} className={`cursor-pointer ${isHighlight(item) ? "bg-gray-100 font-bold" : ""}`}>
+                {formExpenseHeaders.map((i, idx) => (
                   <td key={idx} className="px-6 py-1 whitespace-nowrap hover:bg-gray-100">
-                    {Object.keys(item)[idx] !== "item" ? (
-                      <>
-                        <Input
-                          disabled={noInputFromKeys[Object.keys(item)[idx]]}
-                          type={typeFromKeys[Object.keys(item)[idx]] || "text"}
-                          className="text-center"
-                          variant="bordered"
-                          size="sm"
-                          placeholder={placeholderFromKeys.find((i) => Object.keys(item)[idx] === i.field && i.item === item.item)?.placeholder || ""}
-                          value={val === "-" ? "" : val}
-                          onChange={(e) => {
-                            const newExpensesList = [...expensesList];
-                            newExpensesList[index][Object.keys(item)[idx]] = e.target.value;
-                            setExpensesList(newExpensesList);
-                          }}
-                        />
-                      </>
-                    ) : (
-                      val
-                    )}
+                    {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
+                    {item.allow_date == 1 && i.key === "date" ? <Input type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_no == 1 && i.key === "no" ? <Input type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_cash == 1 && i.key === "cash" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_bank == 1 && i.key === "bank" ? <Input type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {item.allow_item == 1 && i.key === "item" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
+                    {i.key === "memo" ? <Input type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChengeExpenseValue(e.target.value, index, i.key)} /> : ""}
                   </td>
                 ))}
               </tr>

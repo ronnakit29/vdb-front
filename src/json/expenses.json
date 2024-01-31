@@ -1,233 +1,339 @@
 [
     {
-        "item": "\"ปิดบัญชี\" สมาชิก100 %",
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_cash": 1,
+        "item": "\"ปิดบัญชี\" สมาชิก 100 %",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
-        "item": "",
-        "no": "",
-        "cash": "",
-        "memo": ""
-    },
-    {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": 1,
+        "allow_cash": 1,
         "item": "\" ถอน 70% \" สมาชิก   ",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
-        "item": "",
-        "no": "",
-        "cash": "",
-        "memo": ""
-    },
-    {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ถอน \" กองทุนความมั่นคง \"",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ถอน \" กองทุนเยาวชน \"",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ถอน \" กองทุนพัฒนาหมู่บ้าน \"",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ถอน \" กองทุนสวัสดิการ \"",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ถอน  \" กองทุนสำรองกลุ่ม \"",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
-        "item": "",
-        "no": "",
-        "cash": "",
-        "memo": ""
-    },
-    {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ชำระคืน -เงินต้น ธ.กลาง",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ชำระคืน -เงินต้น ธนาคารฯ........................................",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": "",
         "item": "ชำระคืนเงินต้น อื่น ๆ.  :-.",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
-        "item": "",
-        "no": "",
-        "cash": "",
-        "memo": ""
-    },
-    {
-        "item": "",
-        "no": "",
-        "cash": "",
-        "memo": ""
-    },
-    {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ชำระคืน -ดอกเบี้ยเงินกู้ ธ.กลาง",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ชำระคืน -ดอกเบี้ยเงินกู้ ธนาคารฯ.................................",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": "",
         "item": "ชำระคืนดอกเบี้ยเงินกู้ อื่น ๆ.  :-",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": "",
         "item": "รายจ่ายอื่น.  :-",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ปล่อยกู้  ธนาคารฯ  ในเครือข่าย.....................................",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": "",
         "item": "ปล่อยกู้ แหล่งอื่นๆ.-  :-",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": 1,
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
-        "item": "จ่ายเงินประกันความเสี่ยง   (1%).",
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
+        "item": "จ่ายเงินประกันความเสี่ยง   (-%).",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ปล่อยกู้  -  ธุรกิจ/ฉุกเฉิน",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ปล่อยกู้  - ระยะสั้น",
         "no": "",
         "cash": "",
         "memo": ""
     },
     {
+        "allow_item": "",
+        "allow_date": "",
+        "allow_no": "",
+        "allow_cash": 1,
         "item": "ปล่อยกู้  - ระยะยาว",
         "no": "",
         "cash": "",

@@ -13,7 +13,7 @@ export default function PromiseListTable({ data, onReload }) {
     business: "ฉุกเฉิน/ธุรกิจ",
   };
   const router = useRouter();
-  
+
   const headers = [
     {
       key: "timestamp",
@@ -22,13 +22,7 @@ export default function PromiseListTable({ data, onReload }) {
         <div className="flex flex-col gap-2">
           <div>{moment(value).format("DD/MM/YYYY HH:mm:ss")}</div>
           <div>
-            <Button
-              color="primary"
-              size="sm"
-              onClick={() =>
-                router.push(`/dashboard/promise-final?groupId=${item.group_id}`)
-              }
-            >
+            <Button color="primary" size="sm" onClick={() => router.push(`/dashboard/promise-final?groupId=${item.group_id}`)}>
               ดูรายละเอียด
             </Button>
           </div>
@@ -51,42 +45,31 @@ export default function PromiseListTable({ data, onReload }) {
       label: "วันที่เริ่มสัญญา",
       format: ({ value, item }) => (
         <div className="flex flex-col">
-          <div className="font-semibold">
-            เริ่ม: {moment(item.start_date).format("DD/MM/YYYY")}
-          </div>
-          <div className="text-green-600">
-            สิ้นสุด: {moment(item.expired_date).format("DD/MM/YYYY")}
-          </div>
+          <div className="font-semibold">เริ่ม: {moment(item.start_date).format("DD/MM/YYYY")}</div>
+          <div className="text-green-600">สิ้นสุด: {moment(item.expired_date).format("DD/MM/YYYY")}</div>
         </div>
       ),
     },
     {
       key: "status",
       label: "สถานะ",
-      format: ({ value }) =>
-        value === 1 ? (
-          <span className="text-green-500">อยู่ในสัญญา</span>
-        ) : value === 0 ? (
-          <span className="text-yellow-500">สัญญาไม่สมบูรณ์</span>
-        ) : value === 2 ? (
-          <span className="text-red-500">สัญญาสิ้นสุด</span>
-        ) : (
-          <span className="text-gray-500">ยกเลิกสัญญา</span>
-        ),
+      format: ({ value }) => (value === 1 ? <span className="text-green-500">อยู่ในสัญญา</span> : value === 0 ? <span className="text-yellow-500">สัญญาไม่สมบูรณ์</span> : value === 2 ? <span className="text-red-500">สัญญาสิ้นสุด</span> : <span className="text-gray-500">ยกเลิกสัญญา</span>),
     },
     {
       key: "x",
       label: "ชื่อผู้กู้",
       format: ({ value, item }) => (
         <div className="flex flex-col">
-          <div>{item.title_name + item.first_name + " " + item.last_name} {`(${checkOld(moment(item.loaner?.birth_date))} ปี)`}</div>
+          <div>
+            {item.title_name + item.first_name + " " + item.last_name} {`(${checkOld(moment(item.loaner?.birth_date))} ปี)`}
+          </div>
         </div>
       ),
     },
     {
       key: "type",
       label: "ประเภทสัญญา",
-      format: ({ value }) => typeTxt[value],
+      format: ({ value, item }) => typeTxt[value] + "" + (item.addon ? ", พิเศษ" : ""),
     },
     {
       key: "amount",
@@ -111,8 +94,7 @@ export default function PromiseListTable({ data, onReload }) {
     {
       key: "xinterest",
       label: "ดอกเบี้ยต่อเดือน",
-      format: ({ value, item }) =>
-        Helper.formatNumber((item.amount * item.interest) / 100),
+      format: ({ value, item }) => Helper.formatNumber((item.amount * item.interest) / 100),
     },
     {
       key: "citizen_id",
@@ -125,17 +107,8 @@ export default function PromiseListTable({ data, onReload }) {
       ...i,
       running_number: `${i.running_number}/${i.promise_year}`,
       timestamp: moment(i.timestamp).format("DD/MM/YYYY HH:mm:ss"),
-      start_date_end: `เริ่ม: ${moment(i.start_date).format(
-        "DD/MM/YYYY"
-      )} สิ้นสุด: ${moment(i.expired_date).format("DD/MM/YYYY")}`,
-      status:
-        i.status === 1
-          ? "อยู่ในสัญญา"
-          : i.status === 0
-          ? "สัญญาไม่สมบูรณ์"
-          : i.status === 2
-          ? "สัญญาสิ้นสุด"
-          : "ยกเลิกสัญญา",
+      start_date_end: `เริ่ม: ${moment(i.start_date).format("DD/MM/YYYY")} สิ้นสุด: ${moment(i.expired_date).format("DD/MM/YYYY")}`,
+      status: i.status === 1 ? "อยู่ในสัญญา" : i.status === 0 ? "สัญญาไม่สมบูรณ์" : i.status === 2 ? "สัญญาสิ้นสุด" : "ยกเลิกสัญญา",
       x: `${i.title_name}${i.first_name} ${i.last_name}`,
       type: typeTxt[i.type],
       amount: Helper.formatNumber(i.amount),
@@ -146,12 +119,5 @@ export default function PromiseListTable({ data, onReload }) {
       xinterest: Helper.formatNumber((i.amount * i.interest) / 100),
     };
   });
-  return (
-    <TableComponent
-      columns={headers}
-      rows={data || []}
-      onReload={onReload}
-      excelData={dataExport}
-    ></TableComponent>
-  );
+  return <TableComponent columns={headers} rows={data || []} onReload={onReload} excelData={dataExport}></TableComponent>;
 }
