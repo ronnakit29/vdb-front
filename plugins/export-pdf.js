@@ -9,7 +9,8 @@ const readTemplatePDF = async (data = [], file_name) => {
 	const fileLocation = {
 		business: "template4.pdf",
 	}
-	const templatePDFBuffer = await axios.get(`/pdf-template/${fileLocation[data[0].type] || 'template3.pdf'}`, { responseType: 'arraybuffer' });
+	const isBusinessWithCollateral = data[0].type === 'business' && data[0].guarantor === 'collateral';
+	const templatePDFBuffer = await axios.get(`/pdf-template/${isBusinessWithCollateral ? fileLocation[data[0].type] : 'template3.pdf'}`, { responseType: 'arraybuffer' });
 	const bufferData = templatePDFBuffer.data;
 	const pdfDoc = await PDFDocument.load(bufferData);
 	pdfDoc.registerFontkit(fontkit);
