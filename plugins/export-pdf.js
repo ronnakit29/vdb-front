@@ -73,7 +73,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 		pdfDoc.insertPage(key);
 		const currentPage = pdfDoc.getPages()[key]
 
-		if (value.type !== 'business') {
+		if (!(value.type === 'business' && value.guarantor === 'collateral')) {
 			currentPage.drawText(`${typeTxt[value.type]}`, {
 				x: 465,
 				y: currentPage.getHeight() - 34,
