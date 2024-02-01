@@ -261,7 +261,7 @@ function ExcelReader() {
           ยอดรวมรายจ่าย: <span className="text-xl font-bold">{numberFormat(sumAllCashExpenses)}</span> บาท
         </div>
         <div className="text-blue-600">
-          คงเหลือ: <span className="text-xl font-bold">{numberFormat(Number(sumAllBankStatus) + Number(sumAllCash))}</span> บาท
+          คงเหลือ: <span className="text-xl font-bold">{numberFormat(Number(sumAllBankStatus) + Number(sumAllCash) - Number(sumAllCashExpenses))}</span> บาท
         </div>
       </div>
       <div className="flex justify-end gap-4 py-4">
