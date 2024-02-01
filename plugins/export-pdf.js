@@ -89,7 +89,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 			});
 		}
 		let ignoreField = [];
-		if (value.type === 'business') {
+		if (value.type === 'business' && value.guarantor === 'collateral') {
 			ignoreField = ['witness1_license', 'witness2_license', 'witness1_name', 'witness2_name', 'village2_name', 'loaner2_name']
 		}
 		currentPage.drawPage(embeddedPage, {
