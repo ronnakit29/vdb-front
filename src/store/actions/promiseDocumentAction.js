@@ -37,10 +37,10 @@ export function getPromiseDocumentAnalysis(type, startDate, endDate, vid) {
 	}
 }
 
-export function createPromiseDocument({ promiseList, promiseData }, onSuccess) {
+export function createPromiseDocument({ promiseList, promiseData, securities }, onSuccess) {
 	return async (dispatch) => {
 		try {
-			const responses = await client.createPromiseDocument({ promiseList, promiseData });
+			const responses = await client.createPromiseDocument({ promiseList, promiseData, securities });
 			dispatch(showToast('บันทึกข้อมูลสำเร็จ', 'bg-green-500', 3000))
 			onSuccess && onSuccess(responses)
 		} catch (error) {

@@ -266,7 +266,27 @@ export default function PromiseForm() {
         }
     }, [insertSlot.guarantorSecond])
     const age = insertSlot.member && dayjs().diff(dayjs(insertSlot.member?.birth_date), 'year')
-
+    const initSecuritiesFormData = {
+        village_id: '',
+        member_id: '',
+        promise_document_group_id: '',
+        manager_citizen_id: '',
+        transport: '',
+        land_number: '',
+        exploer_page: '',
+        title_deed_book: '',
+        title_deed_page: '',
+        title_deed_district: '',
+        title_deed_province: '',
+        area_rai: '',
+        area_ngan: '',
+        area_wa: '',
+        created_at: '',
+        updated_at: '',
+        deed_number: '',
+    };
+    const [securitiesFormData, setSecuritiesFormData] = useState(initSecuritiesFormData);
+    const { transport, land_number, exploer_page, title_deed_book, title_deed_page, title_deed_district, title_deed_province, area_rai, area_ngan, area_wa, deed_number } = securitiesFormData;
     function savePromiseDocument() {
         const checkInterestForm = promiseList.find(i => i.interest === '')
         if (!formData.deposit_amount || !formData.multiple_deposit || !formData.amount || !formData.period || checkInterestForm) {
@@ -287,7 +307,8 @@ export default function PromiseForm() {
                     start_date: formData.datetime,
                     maximum_loan: maximumLoan,
                     expired_date: dayjs(formData.datetime).add(formData.period, 'month').format('YYYY-MM-DD'),
-                }
+                },
+                securities: securitiesFormData
             }, ({ data }) => router.push(`/dashboard/promise-final?groupId=${data[0].group_id}`)))
         }))
     }
@@ -307,11 +328,12 @@ export default function PromiseForm() {
             guarantee_value: "",
         })
     }, [formData.guarantee_type])
+
     return (
         insertSlot?.member ? <div className='p-8'>
             <div className='mb-5'>
                 <div className='text-xl bg-green-100 text-green-600 rounded-xl py-5 text-center font-semibold'>
-                    การทำสัญญา <span className="underline text-2xl">{typeTxt[typeQuery]}</span>
+                    กรทำสัญญา <span className="underline text-2xl">{typeTxt[typeQuery]}</span>
                 </div>
             </div>
             <SectionForm title={"ข้อมูลผู้ทำสัญญา"}>
@@ -382,8 +404,146 @@ export default function PromiseForm() {
                         {i.name}
                     </div>)}
                 </div>
-                {formData.guarantee_type === "collateral" && <div className="flex gap-4 mt-4">
-                    <Input label="รายละเอียดหลักทรัพย์" placeholder="กรอกรายละเอียดหลักทรัพย์" name="guarantee_value" value={formData.guarantee_value} onChange={(e) => setFormData({ ...formData, guarantee_value: e.target.value })} />
+                {formData.guarantee_type === "collateral" && <div className="grid grid-cols-3 gap-4 mt-4">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">ระวาง</span>
+                        <input
+                            type="text"
+                            name="transport"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="transport"
+                            value={transport}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, transport: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">เลขที่ดิน</span>
+                        <input
+                            type="text"
+                            name="land_number"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="land_number"
+                            value={land_number}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, land_number: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">เลขที่โฉนด</span>
+                        <input
+                            type="text"
+                            name="deed_number"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="deed_number"
+                            value={deed_number}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, deed_number: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">เล่ม</span>
+                        <input
+                            type="text"
+                            name="title_deed_book"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="title_deed_book"
+                            value={title_deed_book}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, title_deed_book: e.target.value })}
+                        />
+
+                    </div>
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">หน้าสำรวจ</span>
+                        <input
+                            type="text"
+                            name="title_deed_page"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="title_deed_page"
+                            value={title_deed_page}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, title_deed_page: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">หน้าสำรวจ</span>
+                        <input
+                            type="text"
+                            name="exploer_page"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="exploer_page"
+                            value={exploer_page}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, exploer_page: e.target.value })}
+                        />
+
+                    </div>
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">อำเภอ</span>
+                        <input
+                            type="text"
+                            name="title_deed_district"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="title_deed_district"
+                            value={title_deed_district}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, title_deed_district: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">จังหวัด</span>
+                        <input
+                            type="text"
+                            name="title_deed_province"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="title_deed_province"
+                            value={title_deed_province}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, title_deed_province: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">ไร่</span>
+                        <input
+                            type="text"
+                            name="area_rai"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="area_rai"
+                            value={area_rai}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, area_rai: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">งาน</span>
+                        <input
+                            type="text"
+                            name="area_ngan"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="area_ngan"
+                            value={area_ngan}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, area_ngan: e.target.value })}
+                        />
+
+                    </div>
+
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600">
+                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">ตารางวา</span>
+                        <input
+                            type="text"
+                            name="area_wa"
+                            className="block flex-1 border-0 bg-transparent py-2 outline-none pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="area_wa"
+                            value={area_wa}
+                            onChange={(e) => setSecuritiesFormData({ ...securitiesFormData, area_wa: e.target.value })}
+                        />
+                    </div>
+
                 </div>}
             </SectionForm>
 

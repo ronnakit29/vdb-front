@@ -17,6 +17,7 @@ import { client } from "@/classes";
 import { checkOld } from "@/helper/helper";
 import moment from "moment";
 import PDFDialogDialog from "@/components/PDFDialog";
+import { getSecuritiesByGroupId } from "@/store/actions/securitiesAction";
 
 export default function PromiseFinal() {
   const router = useRouter();
@@ -28,8 +29,10 @@ export default function PromiseFinal() {
   const groupId = router.query.groupId;
   const dispatch = useDispatch();
   const memberDocs = useSelector((state) => state.promiseDocument.memberDocs);
+  const securities = useSelector((state) => state.securities.securities);
   function init() {
     dispatch(getPromiseDocumentByGroupId(groupId));
+    dispatch(getSecuritiesByGroupId(groupId));
   }
   const insertSlot = useSelector((state) => state.member.insertSlot);
   useEffect(() => {
@@ -160,14 +163,20 @@ export default function PromiseFinal() {
     );
   }
   async function handleOpenPdfDialog() {
-    const pdf = await readTemplatePDF(memberDocs, "เอกสารสัญญาของ " + memberDocs[0].loaner.first_name + " " + memberDocs[0].loaner.last_name + " เลขที่ " + memberDocs[0].id + "/" + memberDocs[0].promise_year);
+    const pdf = await readTemplatePDF(
+      memberDocs.map((i) => ({ ...i, ...securities })),
+      "เอกสารสัญญาของ " + memberDocs[0].loaner.first_name + " " + memberDocs[0].loaner.last_name + " เลขที่ " + memberDocs[0].id + "/" + memberDocs[0].promise_year
+    );
     pdf.export();
   }
   const [pdfUrl, setPdfUrl] = useState("");
   async function openPdfDialog() {
-    const pdf = await readTemplatePDF(memberDocs, "เอกสารสัญญาของ " + memberDocs[0].loaner.first_name + " " + memberDocs[0].loaner.last_name + " เลขที่ " + memberDocs[0].id + "/" + memberDocs[0].promise_year);
+    const pdf = await readTemplatePDF(
+      memberDocs.map((i) => ({ ...i, ...securities })),
+      "เอกสารสัญญาของ " + memberDocs[0].loaner.first_name + " " + memberDocs[0].loaner.last_name + " เลขที่ " + memberDocs[0].id + "/" + memberDocs[0].promise_year
+    );
     const data = pdf.blobUrl;
-    console.log(data)
+    console.log(data);
     setPdfUrl(data);
     dispatch(setDialog({ pdfDialog: true }));
   }
@@ -214,7 +223,7 @@ export default function PromiseFinal() {
                     <div className="w-44">เลขที่:</div> {i.running_number}/{i.promise_year}
                   </li>
                   <li className="flex items-center">
-                    <div className="w-44">ประเภทสัญญา:</div> {typeTxt[i.type]}, {i.addon ? 'พิเศษ' : '-'}
+                    <div className="w-44">ประเภทสัญญา:</div> {typeTxt[i.type]}, {i.addon ? "พิเศษ" : "-"}
                   </li>
                   <li className="flex items-center">
                     <div className="w-44">วันที่ทำสัญญา:</div> {Helper.formatDate(i.timestamp)}

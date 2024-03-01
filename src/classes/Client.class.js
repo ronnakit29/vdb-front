@@ -139,6 +139,9 @@ class Client {
 	async handleCancelIncomeExpense(id) {
 		return await this.call("POST", "/api/income-expenses/cancel", { id });
 	}
+	async getSecuritiesByGroupId(groupId) {
+		return await this.call("GET", "/api/securities/" + groupId);
+	}
 }
 
 export default Client;

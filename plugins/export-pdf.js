@@ -9,7 +9,7 @@ const readTemplatePDF = async (data = [], file_name) => {
 	const fileLocation = {
 		business: "template4.pdf",
 	}
-	const isBusinessWithCollateral = data[0].type === 'business' && data[0].guarantor === 'collateral';
+	const isBusinessWithCollateral = data[0].type === 'business' && data[0].guarantee_type === 'collateral';
 	const templatePDFBuffer = await axios.get(`/pdf-template/${isBusinessWithCollateral ? fileLocation[data[0].type] : 'template3.pdf'}`, { responseType: 'arraybuffer' });
 	const bufferData = templatePDFBuffer.data;
 	const pdfDoc = await PDFDocument.load(bufferData);
@@ -67,13 +67,26 @@ const readTemplatePDF = async (data = [], file_name) => {
 		district: { x: 70, y: 164 },
 		province: { x: 170, y: 164 },
 		limit_hedgefund_protech: { x: 275, y: 318 },
+		// ignore
+		transport: { x: 80, y: 712 },
+		land_number: { x: 400, y: 712 },
+		deed_number: { x: 90, y: 737 },
+		exploer_page: { x: 100, y: 762 },
+		title_deed_book: { x: 380, y: 737 },
+		title_deed_page: { x: 470, y: 737 },
+		title_deed_district: { x: 390, y: 762 },
+		title_deed_province: { x: 410, y: 788 },
+		area_rai: { x: 190, y: 814 },
+		area_ngan: { x: 260, y: 814 },
+		area_wa: { x: 350, y: 814 },
+
 	};
 	// const helveticaFont = await pdfDoc.embedFont(PDFDocument.Fonts.Helvetica);
 	data.forEach((value, key) => {
 		pdfDoc.insertPage(key);
 		const currentPage = pdfDoc.getPages()[key]
 
-		if (!(value.type === 'business' && value.guarantor === 'collateral')) {
+		if (!(value.type === 'business' && value.guarantee_type === 'collateral')) {
 			currentPage.drawText(`${typeTxt[value.type]}`, {
 				x: 465,
 				y: currentPage.getHeight() - 34,
@@ -90,8 +103,10 @@ const readTemplatePDF = async (data = [], file_name) => {
 			});
 		}
 		let ignoreField = [];
-		if (value.type === 'business' && value.guarantor === 'collateral') {
+		if (value.type === 'business' && value.guarantee_type === 'collateral') {
 			ignoreField = ['witness1_license', 'witness2_license', 'witness1_name', 'witness2_name', 'village2_name', 'loaner2_name']
+		} else {
+			ignoreField = ['transport', 'land_number', 'exploer_page', 'title_deed_book', 'title_deed_page', 'title_deed_district', 'title_deed_province', 'area_rai', 'area_ngan', 'area_wa']
 		}
 		currentPage.drawPage(embeddedPage, {
 			x: 0,
