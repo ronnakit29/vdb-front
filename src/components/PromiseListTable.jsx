@@ -5,6 +5,9 @@ import { Button } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import moment from "moment";
 import { checkOld } from "@/helper/helper";
+// timezone +7
+import "moment-timezone";
+moment.tz.setDefault("Asia/Bangkok");
 
 export default function PromiseListTable({ data, onReload }) {
   const typeTxt = {
@@ -47,6 +50,7 @@ export default function PromiseListTable({ data, onReload }) {
         <div className="flex flex-col">
           <div className="font-semibold">เริ่ม: {moment(item.start_date).format("DD/MM/YYYY")}</div>
           <div className="text-green-600">สิ้นสุด: {moment(item.expired_date).format("DD/MM/YYYY")}</div>
+          {item.end_time && <div className="text-green-600">วันที่ทำรายการสิ้นสุด: {moment(item.end_time).format("DD/MM/YYYY HH:mm")}</div>}
         </div>
       ),
     },

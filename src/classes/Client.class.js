@@ -142,6 +142,11 @@ class Client {
 	async getSecuritiesByGroupId(groupId) {
 		return await this.call("GET", "/api/securities/" + groupId);
 	}
+	async uploadFile(file) {
+		const formData = new FormData();
+		formData.append("file", file);
+		return await this.call("POST", "/api/upload/file", formData);
+	}
 }
 
 export default Client;

@@ -13,10 +13,13 @@ import ReadCardDialog from "./ReadCardDialog";
 import { createIncomeExpenses, getIncomeExpenseById } from "@/store/actions/incomeExpensesAction";
 import { useRouter } from "next/router";
 import { setIncomeExpenses } from "@/store/slices/incomeExpensesSlice";
+import { client } from "@/classes";
 function ExcelReader() {
   const [incomeList, setIncomeList] = useState([]);
   const [expensesList, setExpensesList] = useState([]);
   const [financialStatusList, setFinancialStatusList] = useState([]);
+  const [file, setFile] = useState(null);
+  const [banking_value, setBankingValue] = useState(0);
   const router = useRouter();
   const { id } = router.query;
 
@@ -33,14 +36,32 @@ function ExcelReader() {
         setExpensesList(expense);
         setFinancialStatusList(financialStatus);
         setDescription(incomeExpenses.description);
+        setBankingValue(incomeExpenses.banking_value);
+        setFile(incomeExpenses.file);
       } else {
         setIncomeList([...incomeJson]);
         setExpensesList([...expensesJson]);
         setFinancialStatusList([...financialStatusJson]);
         setDescription("");
+        setBankingValue(0);
+        setFile(null);
       }
     }
   }, [incomeExpenses]);
+
+  async function uploadFile(e) {
+    const files = e.target.files;
+    try {
+      if (files.length > 0) {
+        const file = files[0];
+        const response = await client.uploadFile(file);
+        setFile(client.baseUrl + "/uploads/" + response.data.filename)
+      }
+    } catch (error) {
+
+    }
+
+  }
 
   useEffect(() => {
     if (id) {
@@ -75,7 +96,7 @@ function ExcelReader() {
   async function checkManagerAndSave(citizen_id) {
     try {
       dispatch(
-        createIncomeExpenses({ income_form: JSON.stringify(incomeList), expense_form: JSON.stringify(expensesList), financial_status_form: JSON.stringify(financialStatusList), expense: sumAllCashExpenses, income: sumAllBankStatus + sumAllCash, description, citizen_id }, () => {
+        createIncomeExpenses({ income_form: JSON.stringify(incomeList), expense_form: JSON.stringify(expensesList), financial_status_form: JSON.stringify(financialStatusList), expense: sumAllCashExpenses, income: sumAllBankStatus + sumAllCash, description, citizen_id, banking_value, file }, () => {
           router.push("/dashboard/income-expense");
         })
       );
@@ -144,6 +165,14 @@ function ExcelReader() {
     const comma = new Intl.NumberFormat("en-US", { minimumFractionDigits: digit }).format(val);
     return comma;
   }
+  const [showFile, setShowFile] = useState(false);
+  useEffect(() => {
+    if (file) {
+      setTimeout(() => {
+        setShowFile(true);
+      }, 1000);
+    }
+  }, [file]);
   return (
     <div>
       <div className="mb-4">
@@ -154,37 +183,51 @@ function ExcelReader() {
         <Input variant="bordered" label="หมายเหตุ" placeholder="กรอกข้อมูล" value={description} onChange={(e) => setDescription(e.target.value)} />
       </div>
       {page === 0 ? (
-        <table className="w-full table-auto">
-          <thead className="bg-gray-100">
-            <tr>
-              {/* Render table headers */}
-              {financialStatusList.length > 0 &&
-                formFinancialStatusHeaders.map((header) => (
-                  <th key={header.key} className="py-4 text-left px-4">
-                    {header.label}
-                  </th>
-                ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {/* Render table rows */}
-            {financialStatusList.map((item, index) => (
-              <tr key={index} className={`cursor-pointer ${isHighlight(item) ? "bg-gray-100 font-bold" : ""}`}>
-                {formFinancialStatusHeaders.map((i, idx) => (
-                  <td key={idx} className="py-1 whitespace-nowrap hover:bg-gray-100 px-4">
-                    {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
-                    {item.allow_date == 1 && i.key === "date" ? <Input readOnly={id ? true : false} type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_no == 1 && i.key === "no" ? <Input readOnly={id ? true : false} type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_cash == 1 && i.key === "cash" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_bank == 1 && i.key === "bank" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {item.allow_item == 1 && i.key === "item_financial_status" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                    {i.key === "memo" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
-                  </td>
-                ))}
+        <div>
+          <table className="w-full table-auto">
+            <thead className="bg-gray-100">
+              <tr>
+                {/* Render table headers */}
+                {financialStatusList.length > 0 &&
+                  formFinancialStatusHeaders.map((header) => (
+                    <th key={header.key} className="py-4 text-left px-4">
+                      {header.label}
+                    </th>
+                  ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {/* Render table rows */}
+              {financialStatusList.map((item, index) => (
+                <tr key={index} className={`cursor-pointer ${isHighlight(item) ? "bg-gray-100 font-bold" : ""}`}>
+                  {formFinancialStatusHeaders.map((i, idx) => (
+                    <td key={idx} className="py-1 whitespace-nowrap hover:bg-gray-100 px-4">
+                      {!["date", "cash", "bank", "memo", "no"].includes(i.key) && !item.allow_item && <span className={`${item.is_header ? "font-bold" : ""}`}>{item[i.key]}</span>}
+                      {item.allow_date == 1 && i.key === "date" ? <Input readOnly={id ? true : false} type="date" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                      {item.allow_no == 1 && i.key === "no" ? <Input readOnly={id ? true : false} type="number" className="text-center w-16" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                      {item.allow_cash == 1 && i.key === "cash" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                      {item.allow_bank == 1 && i.key === "bank" ? <Input readOnly={id ? true : false} type="number" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                      {item.allow_item == 1 && i.key === "item_financial_status" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                      {i.key === "memo" ? <Input readOnly={id ? true : false} type="text" className="text-center" variant="bordered" size="sm" placeholder={""} value={item[i.key]} onChange={(e) => handleChangeFinancialStatus(e.target.value, index, i.key)} /> : ""}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex flex-col gap-4 py-4 px-4 rounded-lg">
+            <div className="text-primary-500 font-bold flex items-center gap-2">
+              <span>ยอดเงินฝาก</span> <Input type="number" className="text-center flex-1" variant="bordered" size="sm" placeholder={""} value={banking_value} onChange={(e) => setBankingValue(e.target.value)} />
+            </div>
+            {!id && <div className="text-primary-500 font-bold flex items-center gap-2">
+              <span>รูปภาพสมุดธนาคาร</span> <Input type="file" className="text-center flex-1 file:bg-transparent file:bg-white file:border-none" variant="bordered" size="sm" placeholder={""} onChange={uploadFile} />
+            </div>}
+            {file && <div>
+              ลิงค์รูปภาพ : <a href={file} className="truncate text-primary-500 underline" target="_blank">{file}</a>
+            </div>}
+          </div>
+        </div>
+
       ) : page === 1 ? (
         <table className="w-full table-auto">
           <thead className="bg-gray-100">

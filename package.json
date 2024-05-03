@@ -22,6 +22,7 @@
     "fontkit": "^2.0.2",
     "framer-motion": "^10.16.1",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.45",
     "next": "13.4.19",
     "pdf-lib": "^1.17.1",
     "postcss": "8.4.28",
