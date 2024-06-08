@@ -7,7 +7,7 @@ export default function SupportProgram() {
   const user = useSelector((state) => state.user.user);
   const village_code = user?.village_code;
   const cdnLink =
-    "https://cdn.discordapp.com/attachments/1149976743722111036/1178205968732000256/v2.zip";
+    "https://s3cloud999web.sgp1.cdn.digitaloceanspaces.com/vdb-file/smartcard-reader-v1.2_use_for_vdbapp_only_x64.zip";
   function linkToSmartCard() {
     const token = localStorage.getItem("token");
     const link =
